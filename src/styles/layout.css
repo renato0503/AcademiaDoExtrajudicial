@@ -81,6 +81,13 @@ body {
   font-size: 1.25rem;
 }
 
+.logo-img {
+  width: auto;
+  height: 40px;
+  max-width: 120px;
+  object-fit: contain;
+}
+
 .logo-text {
   color: var(--text-white);
   font-family: var(--font-display);
