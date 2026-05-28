@@ -14,13 +14,14 @@ A "constituição técnica" do projeto (`stack_e_padroes.md`) define o uso do **
   ├── agentes/                      # "Constituição técnica" do projeto
   ├── public/                       # Assets estáticos servidos na raiz (ex: logo.png)
   ├── src/
-  │   ├── components/               # Componentes (ex: theme-loader.js)
-  │   ├── services/                 # Serviços centrais (ex: firebase.js)
-  │   ├── styles/                   # Folhas de estilo (variables.css, layout.css)
+  │   ├── components/               # Web Components e utilitários (Header.js, Footer.js, theme-loader.js)
+  │   ├── services/                 # Serviços centrais (firebase.js)
+  │   ├── styles/                   # Folhas de estilo (variables.css, layout.css, landing.css)
   │   └── utils/                    # Utilitários (constants.js, etc.)
-  ├── index.html                    # Ponto de entrada HTML na raiz
+  ├── index.html                    # Ponto de entrada: Landing Page Institucional
+  ├── dashboard.html                # Painel de Cursos (antigo index.html)
   ├── package.json                  # Dependências e scripts do Node.js
-  ├── vite.config.js                # Configuração do compilador Vite
+  ├── vite.config.js                # Configuração do compilador Vite (MPA)
   └── contexto.md                   # Este relatório explicativo
   ```
 
@@ -39,38 +40,55 @@ Para hospedar o site no endereço `https://renato0503.github.io/AcademiaDoExtraj
 
 ---
 
-## 🔍 3. Resolução de Erros Encontrados
+## 🏗️ 3. Landing Page Institucional & Arquitetura MPA
+Com a evolução do projeto, surgiu a necessidade de criar uma **Landing Page Institucional** como porta de entrada principal da plataforma, mantendo a área de cursos em uma rota privada/interna.
 
-### ❌ Problema A: Erros 404 ao Carregar Estilos e Scripts
-- **Causa:** No HTML inicial, os caminhos estavam como `/src/styles/layout.css` (absolutos em relação ao domínio). No GitHub Pages, o navegador tentava buscar os arquivos em `https://renato0503.github.io/src/...` em vez de `https://renato0503.github.io/AcademiaDoExtrajudicial/src/...`.
-- **Solução:** Alteramos os caminhos do `index.html` para relativos (adicionando `./` no início, ex: `./src/styles/layout.css`). O Vite intercepta essas referências locais e injeta os caminhos de build corretos.
-
-### ❌ Problema B: Erro `TypeError: Failed to resolve module specifier "firebase/firestore"`
-- **Causa:** O GitHub Pages estava configurado para servir a branch `main` diretamente (modo "Deploy from branch"). Isso servia o código-fonte cru de desenvolvimento. O navegador tentava executar o arquivo `theme-loader.js` nativo sem passar pela compilação do Vite, estourando erro de importação do Firebase.
-- **Solução:** Mudamos a configuração do GitHub Pages no repositório para utilizar **GitHub Actions** como fonte. Agora ele serve os arquivos gerados pela build na pasta `/dist` (onde o Firebase está embutido e resolvido dentro do JavaScript de produção).
-
-### ❌ Problema C: Erro 404 no Favicon
-- **Causa:** Navegadores buscam automaticamente por `/favicon.ico` na raiz, gerando logs de erro 404 caso o arquivo não exista.
-- **Solução:** Injetamos um favicon SVG dinâmico inline diretamente no `<head>` usando um emoji de diamante (`💎`):
-  ```html
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
-  ```
-
-### ❌ Problema D: Logo Duplicada (Visual)
-- **Causa:** A imagem da logo enviada pelo cliente (`logo.png`) já continha o texto estilizado "Academia do Extrajudicial". No HTML, mantínhamos ao lado a tag `<div class="logo-text">`, gerando repetição e poluição visual.
-- **Solução:** Removemos a tag de texto do HTML e mantivemos apenas a imagem `logo.png` (copiada pelo Vite para a raiz da pasta `/dist`), além de ajustar a classe `.logo-img` no CSS para redimensionar a logo de forma responsiva e limpa.
-
-### ❌ Problema E: Persistência de Erros no Navegador (Mesmo após Correção)
-- **Causa:** O navegador do usuário retém o arquivo `index.html` anterior em cache de sessão. Mesmo com a build corrigida publicada pelo GitHub Actions, o navegador continuava lendo a versão local em cache que apontava para o script de desenvolvimento com os erros do Firebase.
-- **Solução:** Instruído o teste utilizando uma **Janela Anônima** (que ignora o cache local) para validar o deploy em tempo real após a conclusão das esteiras de build.
+1. **Estratégia Multi-Page Application (MPA) no Vite:**
+   - Para que o Vite compile múltiplos arquivos HTML e os disponibilize na pasta de distribuição, configuramos o parâmetro `rollupOptions.input` no `vite.config.js`.
+   - Mapeamos `index.html` (Landing Page) e `dashboard.html` (Painel do Aluno), que são compilados juntos na build.
+2. **Migração do Painel de Cursos:**
+   - O arquivo `index.html` original do Dashboard foi renomeado para `dashboard.html` na raiz do projeto.
+   - O novo arquivo `index.html` foi criado para conter as seções da Landing Page (Hero, Sobre, Cursos, Benefícios, Stats, Depoimentos e CTA de entrada).
+3. **Componentização Sem Frameworks (Web Components):**
+   - Criamos os arquivos `src/components/Header.js` (cabeçalho) e `src/components/Footer.js` (rodapé) utilizando a API nativa de **Web Components** do navegador.
+   - Isso encapsula a estrutura, os estilos e os comportamentos lógicos (scroll suave, animação do header ao scrollar, e alternância do menu mobile) em tags HTML customizadas (`<main-header>` e `<main-footer>`) em Javascript Vanilla puro.
 
 ---
 
-## 📈 Resumo do Fluxo de Trabalho (Workfow)
+## 🔍 4. Resolução de Erros Encontrados
+
+### ❌ Problema A: Erros 404 ao Carregar Estilos e Scripts
+- **Causa:** No HTML inicial, os caminhos estavam como `/src/...` (absolutos em relação ao domínio). No GitHub Pages, o navegador buscava os arquivos na raiz do domínio `https://renato0503.github.io/src/...` ignorando a pasta do subprojeto.
+- **Solução:** Alteramos os caminhos do `index.html` para relativos (ex: `./src/styles/layout.css`).
+
+### ❌ Problema B: Erro `TypeError: Failed to resolve module specifier "firebase/firestore"`
+- **Causa:** O GitHub Pages estava configurado para servir a branch `main` diretamente (código cru). O navegador tentava rodar o script ES6 cru `theme-loader.js` sem passar pelo build do Vite, falhando ao importar dependências do npm.
+- **Solução:** Mudamos a configuração do Pages no GitHub para usar **GitHub Actions** como fonte, forçando a publicação apenas dos artefatos da pasta `/dist` resolvidos e minificados.
+
+### ❌ Problema C: Diamante Decorativo da Sidebar Cobrindo o Menu
+- **Causa:** O pseudo-elemento `.sidebar::after` estava posicionado de forma absoluta a `top: 120px` e com opacidade `0.9`, ficando exatamente por cima do botão "Dashboard" e cobrindo o texto do menu.
+- **Solução:** Reposicionamos o diamante para o canto inferior direito com `bottom: -30px; right: -30px`, reduzindo a opacidade para `0.15` (marca d'água discreta de fundo) e adicionamos `z-index: 2` na tag `nav` para forçar o empilhamento correto.
+
+### ❌ Problema D: Logo Duplicada (Visual)
+- **Causa:** A imagem da logo enviada pelo cliente (`logo.png`) já continha a tipografia e o texto "Academia do Extrajudicial". O HTML mantinha uma tag de texto ao lado, duplicando a informação visual.
+- **Solução:** Removemos a tag de texto redundante e mantivemos apenas a imagem com a classe de estilo de redimensionamento responsivo.
+
+### ❌ Problema E: Persistência de Erros por Cache
+- **Causa:** O navegador do usuário retém o index.html antigo de desenvolvimento em cache de sessão.
+- **Solução:** Instruído a limpar o cache ou a testar em **Janela Anônima** para descartar arquivos de sessões passadas.
+
+---
+
+## 📈 Resumo do Fluxo de Trabalho e Navegação
 ```mermaid
 graph TD
     A[Código Local] -->|git push| B[Repositório GitHub]
-    B -->|Dispara Action| C[Build na Nuvem: npm run build]
-    C -->|Gera Pasta dist/| D[Deploy do Artefato no Pages]
-    D -->|Hospedagem Atualizada| E[Acesso via Navegador Privado/Sem Cache]
+    B -->|Dispara Action| C[Build MPA na Nuvem: npm run build]
+    C -->|Gera dist/index.html & dist/dashboard.html| D[Deploy no Pages via Actions]
+    
+    subgraph Fluxo de Navegação do Usuário
+        E[Landing Page: index.html] -->|Botões CTA / Entrar| F[Painel de Cursos: dashboard.html]
+    end
+    
+    D -->|Servido Online| E
 ```
