@@ -1,0 +1,65 @@
+/* === CORES DA MARCA (extraídas das imagens) === */
+:root {
+  /* Azul profundo da sidebar/fundo */
+  --blue-deep: #1E2A5A;
+  --blue-medium: #2D3A6E;
+  --blue-light: #4A5A9E;
+  --blue-gradient: linear-gradient(180deg, #1E2A5A 0%, #2D3A6E 50%, #4A5A9E 100%);
+
+  /* Teal (diamante decorativo) */
+  --teal: #87CECA;
+  --teal-light: #A8E6E2;
+  --teal-dark: #5FB8B3;
+  --teal-gradient: linear-gradient(135deg, #87CECA 0%, #5FB8B3 100%);
+
+  /* Fundos */
+  --bg-white: #FFFFFF;
+  --bg-light: #F4F6FA;
+  --bg-card: #FFFFFF;
+
+  /* Textos */
+  --text-primary: #1E2A5A;
+  --text-secondary: #5A6A9E;
+  --text-light: #8A9ABE;
+  --text-white: #FFFFFF;
+
+  /* Sombras (baseadas na estética clean das imagens) */
+  --shadow-sm: 0 2px 8px rgba(30, 42, 90, 0.08);
+  --shadow-md: 0 4px 16px rgba(30, 42, 90, 0.12);
+  --shadow-lg: 0 8px 32px rgba(30, 42, 90, 0.16);
+  --shadow-xl: 0 12px 48px rgba(30, 42, 90, 0.20);
+
+  /* Bordas e raios */
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+  --radius-diamond: 2.5rem; /* Para o diamante arredondado */
+
+  /* Espaçamentos */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* Transições */
+  --transition-fast: all 0.15s ease;
+  --transition-base: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Tipografia */
+  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Plus Jakarta Sans', var(--font-main);
+}
+
+/* Tema escuro (baseado na imagem 2) */
+:root[data-theme="dark"] {
+  --bg-white: var(--blue-deep);
+  --bg-light: #162044;
+  --bg-card: #243060;
+  --text-primary: var(--text-white);
+  --text-secondary: #A8B8E0;
+  --text-light: #6A7AAE;
+}

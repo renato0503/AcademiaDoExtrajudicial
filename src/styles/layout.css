@@ -1,0 +1,261 @@
+/* === ESTRUTURA BASE === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--bg-light);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* === CONTAINER PRINCIPAL === */
+.app-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+}
+
+/* === SIDEBAR (estilo imagem 0/1) === */
+.sidebar {
+  background: var(--blue-gradient);
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efeito de canto arredondado na sidebar */
+.sidebar::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 120px;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+}
+
+/* Diamante decorativo (como nas imagens) */
+.sidebar::after {
+  content: '';
+  position: absolute;
+  top: 120px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 80px;
+  height: 80px;
+  background: var(--teal-gradient);
+  border-radius: var(--radius-diamond);
+  box-shadow: 0 8px 24px rgba(135, 206, 202, 0.3);
+  opacity: 0.9;
+  pointer-events: none; /* Evita bloquear interações caso se sobreponha */
+}
+
+/* Logo na sidebar */
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-2xl);
+  position: relative;
+  z-index: 1;
+}
+
+.logo-mark {
+  width: 40px;
+  height: 40px;
+  background: var(--teal);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--blue-deep);
+  font-size: 1.25rem;
+}
+
+.logo-text {
+  color: var(--text-white);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Navegação */
+.nav-menu {
+  list-style: none;
+  flex: 1;
+}
+
+.nav-item {
+  margin-bottom: var(--space-sm);
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: var(--transition-base);
+  font-size: 0.95rem;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-white);
+  transform: translateX(4px);
+}
+
+.nav-link.active {
+  background: rgba(135, 206, 202, 0.2);
+  color: var(--teal-light);
+}
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  opacity: 0.8;
+}
+
+/* === CONTEÚDO PRINCIPAL === */
+.main-content {
+  padding: var(--space-2xl);
+  background: var(--bg-light);
+  overflow-y: auto;
+}
+
+/* Header da página */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* === CARDS DE CURSO (estilo imagem 3) === */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-xl);
+}
+
+.course-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition-base);
+  cursor: pointer;
+}
+
+.course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.course-thumbnail {
+  width: 100%;
+  height: 160px;
+  background: linear-gradient(135deg, var(--bg-light) 0%, #E8ECF4 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.course-thumbnail::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background: var(--teal);
+  border-radius: var(--radius-sm);
+  transform: rotate(45deg);
+  opacity: 0.3;
+}
+
+.course-info {
+  padding: var(--space-lg);
+}
+
+.course-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: var(--space-md);
+  color: var(--text-primary);
+}
+
+/* Barra de progresso */
+.progress-bar {
+  height: 6px;
+  background: #E8ECF4;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: var(--space-sm);
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue-medium) 0%, var(--teal) 100%);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.progress-text {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: var(--space-sm);
+}
+
+/* === RESPONSIVO === */
+@media (max-width: 1024px) {
+  .app-container {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: -280px;
+    top: 0;
+    height: 100vh;
+    z-index: 100;
+    transition: var(--transition-base);
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: var(--space-lg);
+  }
+
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+}
