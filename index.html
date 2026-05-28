@@ -3,12 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Academia do Extrajudicial</title>
+  
+  <!-- SEO Básico -->
+  <title>Academia do Extrajudicial | Capacitação para Cartórios</title>
+  <meta name="description" content="Plataforma de universidade corporativa para cartórios. Cursos de conformidade, LGPD, segurança documental e normas notariais com certificação.">
+  <meta name="keywords" content="cartório, extrajudicial, capacitação, LGPD cartório, direito notarial, segurança documental, universidade corporativa">
+  <meta name="author" content="Academia do Extrajudicial">
+  
+  <!-- Open Graph / Redes Sociais -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://renato0503.github.io/AcademiaDoExtrajudicial/">
+  <meta property="og:title" content="Academia do Extrajudicial | Capacitação Especializada para Cartórios">
+  <meta property="og:description" content="Capacite a equipe do seu cartório com cursos focados nas normas notariais, conformidade legal e atendimento de excelência.">
+  <meta property="og:image" content="./logo.png">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
   
   <!-- Favicon Moderno (Emoji Diamante Teal) -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
@@ -16,107 +28,300 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="./src/styles/variables.css">
   <link rel="stylesheet" href="./src/styles/layout.css">
+  <link rel="stylesheet" href="./src/styles/landing.css">
 </head>
 <body>
-  <div class="app-container">
-    <!-- Sidebar Lateral -->
-    <aside class="sidebar">
-      <div class="logo-container">
-        <img src="./logo.png" alt="Logo Academia do Extrajudicial" class="logo-img">
+  <!-- Link de Acessibilidade: Pular para o Conteúdo Principal -->
+  <a href="#conteudo-principal" class="skip-link" style="position: absolute; top: -100px; left: 0; background: var(--teal); color: var(--blue-deep); padding: 10px; z-index: 9999; transition: top 0.2s;" onfocus="this.style.top='0px'" onblur="this.style.top='-100px'">Pular para o conteúdo principal</a>
+
+  <!-- Header Institucional (Web Component) -->
+  <main-header></main-header>
+
+  <!-- Conteúdo Principal -->
+  <main id="conteudo-principal">
+    
+    <!-- 1. HERO SECTION -->
+    <section id="inicio" class="hero-section" aria-label="Introdução da Academia do Extrajudicial">
+      <div class="section hero-container">
+        <div class="hero-content">
+          <span class="hero-tag">Universidade Corporativa para Cartórios</span>
+          <h1 class="hero-title">Capacitação Especializada para o <span>Extrajudicial</span></h1>
+          <p class="hero-subtitle">
+            Forme profissionais preparados para os desafios dos cartórios com cursos atualizados, alinhados às normas notariais, LGPD e de excelência em atendimento.
+          </p>
+          <div class="hero-ctas">
+            <a href="#cursos" class="btn btn-filled">Explorar Cursos</a>
+            <a href="#sobre" class="btn btn-outline">Conheça a Academia</a>
+          </div>
+        </div>
+        
+        <div class="hero-visual">
+          <div class="hero-card-mockup" aria-hidden="true">
+            <div class="mockup-header">
+              <span class="mockup-dot" style="background: #FF5F56;"></span>
+              <span class="mockup-dot" style="background: #FFBD2E;"></span>
+              <span class="mockup-dot" style="background: #27C93F;"></span>
+            </div>
+            <div class="mockup-body">
+              <div class="mockup-line short" style="height: 20px; background: var(--teal); border-radius: var(--radius-sm);"></div>
+              <div class="mockup-line long"></div>
+              <div class="mockup-line medium"></div>
+              <div class="mockup-line long" style="margin-top: var(--space-md);"></div>
+              <div class="mockup-line" style="height: 40px; background: rgba(255,255,255,0.05); border-radius: var(--radius-md);"></div>
+            </div>
+          </div>
+          <!-- Diamante Flutuante Tridimensional -->
+          <div class="hero-diamond-decorative"></div>
+        </div>
       </div>
+    </section>
 
-      <nav aria-label="Navegação Principal">
-        <ul class="nav-menu">
-          <li class="nav-item">
-            <a href="#" class="nav-link active" id="nav-dashboard">
-              <span class="nav-icon" aria-hidden="true">📊</span>
-              Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-courses">
-              <span class="nav-icon" aria-hidden="true">📚</span>
-              Meus Cursos
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-library">
-              <span class="nav-icon" aria-hidden="true">📖</span>
-              Biblioteca
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-certificates">
-              <span class="nav-icon" aria-hidden="true">🏆</span>
-              Certificados
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-settings">
-              <span class="nav-icon" aria-hidden="true">⚙️</span>
-              Configurações
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </aside>
+    <!-- 2. SEÇÃO SOBRE -->
+    <section id="sobre" class="sobre-section" aria-labelledby="sobre-title">
+      <div class="section">
+        <div class="section-header">
+          <h2 id="sobre-title" class="section-header-title">Excelência em Educação para Cartórios</h2>
+          <p class="section-header-desc">
+            A Academia do Extrajudicial é a plataforma definitiva de gestão de conhecimento para serventias brasileiras, focada em segurança legal e eficiência.
+          </p>
+        </div>
+        
+        <div class="sobre-grid">
+          <!-- Card 1 -->
+          <article class="sobre-card">
+            <div class="card-icon-container" aria-hidden="true">🎓</div>
+            <h3 class="sobre-card-title">Capacitação Especializada</h3>
+            <p class="sobre-card-desc">Cursos elaborados por profissionais de destaque com ampla vivência prática no setor notarial.</p>
+          </article>
+          
+          <!-- Card 2 -->
+          <article class="sobre-card">
+            <div class="card-icon-container" aria-hidden="true">⚖️</div>
+            <h3 class="sobre-card-title">Conformidade & LGPD</h3>
+            <p class="sobre-card-desc">Módulos específicos de conformidade legal, segurança documental e proteção de dados em serventias.</p>
+          </article>
+          
+          <!-- Card 3 -->
+          <article class="sobre-card">
+            <div class="card-icon-container" aria-hidden="true">🏆</div>
+            <h3 class="sobre-card-title">Certificação de Peso</h3>
+            <p class="sobre-card-desc">Certificados digitais emitidos de forma auditável e com hash SHA-256 de validação pública.</p>
+          </article>
+          
+          <!-- Card 4 -->
+          <article class="sobre-card">
+            <div class="card-icon-container" aria-hidden="true">⚡</div>
+            <h3 class="sobre-card-title">Aprendizado Flexível</h3>
+            <p class="sobre-card-desc">Vídeos rápidos, materiais em PDF e quizzes práticos que se adaptam à rotina de trabalho.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-    <!-- Área de Conteúdo Principal -->
-    <main class="main-content">
-      <header class="page-header">
-        <h1 class="page-title">Meus Cursos</h1>
-      </header>
-
-      <section class="courses-grid" aria-label="Listagem de Cursos">
-        <!-- Curso 1 -->
-        <article class="course-card" tabindex="0" aria-label="Curso: Introdução ao Direito Notarial, Progresso 75%">
-          <div class="course-thumbnail" aria-hidden="true"></div>
-          <div class="course-info">
-            <h3 class="course-title">Introdução ao Direito Notarial</h3>
-            <div class="progress-text">
-              <span>Progresso</span>
-              <span>75%</span>
+    <!-- 3. SEÇÃO CURSOS EM DESTAQUE -->
+    <section id="cursos" class="cursos-section" aria-labelledby="cursos-title">
+      <div class="section">
+        <div class="section-header">
+          <h2 id="cursos-title" class="section-header-title">Trilhas de Cursos em Destaque</h2>
+          <p class="section-header-desc">Conheça algumas das principais capacitações recomendadas para gestores, escreventes e colaboradores.</p>
+        </div>
+        
+        <div class="cursos-grid-destaque">
+          <!-- Card 1 -->
+          <article class="course-card" tabindex="0" aria-label="Curso: Introdução ao Direito Notarial">
+            <div class="course-thumbnail" aria-hidden="true"></div>
+            <div class="course-info">
+              <h3 class="course-title">Introdução ao Direito Notarial</h3>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: var(--space-md);">
+                A base teórica e as normas práticas essenciais para a atuação cotidiana no extrajudicial.
+              </p>
+              <a href="./dashboard.html" class="btn-card-action">
+                <span>Conhecer Curso</span>
+                <span class="arrow-link" aria-hidden="true">&rarr;</span>
+              </a>
             </div>
-            <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-              <div class="progress-fill" style="width: 75%"></div>
+          </article>
+          
+          <!-- Card 2 -->
+          <article class="course-card" tabindex="0" aria-label="Curso: Gestão de Cartórios">
+            <div class="course-thumbnail" aria-hidden="true"></div>
+            <div class="course-info">
+              <h3 class="course-title">Gestão de Cartórios</h3>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: var(--space-md);">
+                Produtividade, liderança, otimização de fluxos de trabalho e conformidade no atendimento.
+              </p>
+              <a href="./dashboard.html" class="btn-card-action">
+                <span>Conhecer Curso</span>
+                <span class="arrow-link" aria-hidden="true">&rarr;</span>
+              </a>
             </div>
+          </article>
+          
+          <!-- Card 3 -->
+          <article class="course-card" tabindex="0" aria-label="Curso: Tecnologia para Serventias">
+            <div class="course-thumbnail" aria-hidden="true"></div>
+            <div class="course-info">
+              <h3 class="course-title">Tecnologia para Serventias</h3>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: var(--space-md);">
+                Digitalização de acervos, assinaturas eletrônicas e ferramentas tecnológicas para cartórios.
+              </p>
+              <a href="./dashboard.html" class="btn-card-action">
+                <span>Conhecer Curso</span>
+                <span class="arrow-link" aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. SEÇÃO BENEFÍCIOS -->
+    <section id="beneficios" class="beneficios-section" aria-labelledby="beneficios-title">
+      <div class="section">
+        <div class="section-header">
+          <h2 id="beneficios-title" class="section-header-title">Vantagens Exclusivas da Plataforma</h2>
+          <p class="section-header-desc">Diferenciais pensados especificamente para a dinâmica de trabalho e conformidade das serventias.</p>
+        </div>
+        
+        <!-- Benefício 1: Layout Imagem + Texto -->
+        <div class="beneficio-row">
+          <div class="beneficio-visual" aria-hidden="true">
+            <div style="font-size: 5rem;">🛡️</div>
           </div>
-        </article>
-
-        <!-- Curso 2 -->
-        <article class="course-card" tabindex="0" aria-label="Curso: Gestão de Cartórios, Progresso 42%">
-          <div class="course-thumbnail" aria-hidden="true"></div>
-          <div class="course-info">
-            <h3 class="course-title">Gestão de Cartórios</h3>
-            <div class="progress-text">
-              <span>Progresso</span>
-              <span>42%</span>
-            </div>
-            <div class="progress-bar" role="progressbar" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100">
-              <div class="progress-fill" style="width: 42%"></div>
-            </div>
+          <div class="beneficio-content">
+            <span class="beneficio-tag">Segurança Documental</span>
+            <h3 class="beneficio-title">Treinamento em LGPD e Normas Técnicas</h3>
+            <p class="beneficio-desc">
+              Cursos desenvolvidos com foco estrito na Lei Geral de Proteção de Dados (LGPD) e nos provimentos do Conselho Nacional de Justiça (CNJ), instruindo seu time sobre o tratamento seguro e legal das informações sob custódia da serventia.
+            </p>
+            <ul class="beneficio-list">
+              <li class="beneficio-item"><span class="check-icon" aria-hidden="true">✓</span> Provimento 74 e 134 do CNJ</li>
+              <li class="beneficio-item"><span class="check-icon" aria-hidden="true">✓</span> Protocolos de resposta a incidentes</li>
+              <li class="beneficio-item"><span class="check-icon" aria-hidden="true">✓</span> Mitigação de riscos de conformidade</li>
+            </ul>
           </div>
-        </article>
-
-        <!-- Curso 3 -->
-        <article class="course-card" tabindex="0" aria-label="Curso: Tecnologia para Serventias, Progresso 100%">
-          <div class="course-thumbnail" aria-hidden="true"></div>
-          <div class="course-info">
-            <h3 class="course-title">Tecnologia para Serventias</h3>
-            <div class="progress-text">
-              <span>Progresso</span>
-              <span>100%</span>
-            </div>
-            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-              <div class="progress-fill" style="width: 100%"></div>
-            </div>
+        </div>
+        
+        <!-- Benefício 2: Layout Texto + Imagem -->
+        <div class="beneficio-row reverse">
+          <div class="beneficio-visual" aria-hidden="true">
+            <div style="font-size: 5rem;">🔥</div>
           </div>
-        </article>
+          <div class="beneficio-content">
+            <span class="beneficio-tag">Gamificação e Streak</span>
+            <h3 class="beneficio-title">Engajamento e Conhecimento Contínuo</h3>
+            <p class="beneficio-desc">
+              Incentive sua equipe a acessar diariamente com nosso sistema de streak de acessos, acúmulo de pontos e badges de conquistas. O aprendizado torna-se um hábito produtivo integrado à rotina das serventias.
+            </p>
+            <ul class="beneficio-list">
+              <li class="beneficio-item"><span class="check-icon" aria-hidden="true">✓</span> Sistema de pontuação por conclusão</li>
+              <li class="beneficio-item"><span class="check-icon" aria-hidden="true">✓</span> Desafios de streak (dias consecutivos)</li>
+              <li class="beneficio-item"><span class="check-icon" aria-hidden="true">✓</span> Ranking saudável e opt-in para a equipe</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. SEÇÃO STATS (NÚMEROS) -->
+    <div class="stats-section-wrapper">
+      <section class="section stats-grid" aria-label="Métricas da plataforma">
+        <div>
+          <div class="stat-number">15+</div>
+          <div class="stat-label">Cursos Especializados</div>
+        </div>
+        <div>
+          <div class="stat-number">2.5k+</div>
+          <div class="stat-label">Alunos Capacitados</div>
+        </div>
+        <div>
+          <div class="stat-number">120h+</div>
+          <div class="stat-label">Horas de Conteúdo</div>
+        </div>
+        <div>
+          <div class="stat-number">98%</div>
+          <div class="stat-label">Índice de Satisfação</div>
+        </div>
       </section>
-    </main>
-  </div>
+    </div>
 
-  <!-- Carregamento do Módulo do Tema Dinâmico -->
+    <!-- 6. SEÇÃO DEPOIMENTOS -->
+    <section id="depoimentos" class="depoimentos-section" aria-labelledby="depoimentos-title">
+      <div class="section">
+        <div class="section-header">
+          <h2 id="depoimentos-title" class="section-header-title">O que dizem os Titulares e Colaboradores</h2>
+          <p class="section-header-desc">Veja a opinião de quem já otimizou o atendimento e a segurança do cartório com a nossa plataforma.</p>
+        </div>
+        
+        <div class="depoimentos-grid">
+          <!-- Depoimento 1 -->
+          <article class="depoimento-card">
+            <span class="quote-icon" aria-hidden="true">“</span>
+            <div class="depoimento-stars" aria-label="Avaliação 5 de 5 estrelas">★★★★★</div>
+            <p class="depoimento-text">
+              "A capacitação em LGPD mudou a postura da nossa equipe. Hoje, todos entendem a responsabilidade com os dados sob nosso cuidado."
+            </p>
+            <div class="depoimento-user">
+              <div class="user-avatar-placeholder" aria-hidden="true">DR</div>
+              <div class="user-info">
+                <span class="user-name">Dr. Ricardo Silva</span>
+                <span class="user-role">Titular do 2º Registro de Imóveis</span>
+              </div>
+            </div>
+          </article>
+          
+          <!-- Depoimento 2 -->
+          <article class="depoimento-card">
+            <span class="quote-icon" aria-hidden="true">“</span>
+            <div class="depoimento-stars" aria-label="Avaliação 5 de 5 estrelas">★★★★★</div>
+            <p class="depoimento-text">
+              "Os cursos são diretos e focados na nossa realidade. Os colaboradores fazem na hora livre e já aplicam no atendimento no dia seguinte."
+            </p>
+            <div class="depoimento-user">
+              <div class="user-avatar-placeholder" aria-hidden="true">MA</div>
+              <div class="user-info">
+                <span class="user-name">Dra. Maria Albuquerque</span>
+                <span class="user-role">Tabeliã de Notas</span>
+              </div>
+            </div>
+          </article>
+          
+          <!-- Depoimento 3 -->
+          <article class="depoimento-card">
+            <span class="quote-icon" aria-hidden="true">“</span>
+            <div class="depoimento-stars" aria-label="Avaliação 5 de 5 estrelas">★★★★★</div>
+            <p class="depoimento-text">
+              "Gostei muito da dinâmica de pontos e medalhas. Concluir os módulos de conformidade virou um desafio divertido no nosso setor."
+            </p>
+            <div class="depoimento-user">
+              <div class="user-avatar-placeholder" aria-hidden="true">FS</div>
+              <div class="user-info">
+                <span class="user-name">Felipe Souza</span>
+                <span class="user-role">Escrevente Substituto</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. SEÇÃO CTA FINAL -->
+    <div id="contato" class="cta-final-wrapper">
+      <section class="cta-final-container" aria-labelledby="cta-final-title">
+        <h2 id="cta-final-title" class="cta-title">Prepare sua Serventia para o Futuro</h2>
+        <p class="cta-desc">Inicie o treinamento da sua equipe hoje mesmo com a plataforma referência em educação extrajudicial.</p>
+        <a href="./dashboard.html" class="btn btn-filled" style="padding: var(--space-md) var(--space-2xl); font-size: 1.1rem;">Começar Agora</a>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- Rodapé Institucional (Web Component) -->
+  <main-footer></main-footer>
+
+  <!-- Scripts e Componentes Modulares -->
+  <script type="module" src="./src/components/Header.js"></script>
+  <script type="module" src="./src/components/Footer.js"></script>
   <script type="module" src="./src/components/theme-loader.js"></script>
 </body>
 </html>

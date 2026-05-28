@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Aluno - Academia do Extrajudicial</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+  
+  <!-- Favicon Moderno (Emoji Diamante Teal) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./src/styles/variables.css">
+  <link rel="stylesheet" href="./src/styles/layout.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Lateral -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <img src="./logo.png" alt="Logo Academia do Extrajudicial" class="logo-img">
+      </div>
+
+      <nav aria-label="Navegação Principal">
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a href="#" class="nav-link active" id="nav-dashboard">
+              <span class="nav-icon" aria-hidden="true">📊</span>
+              Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" id="nav-courses">
+              <span class="nav-icon" aria-hidden="true">📚</span>
+              Meus Cursos
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" id="nav-library">
+              <span class="nav-icon" aria-hidden="true">📖</span>
+              Biblioteca
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" id="nav-certificates">
+              <span class="nav-icon" aria-hidden="true">🏆</span>
+              Certificados
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" id="nav-settings">
+              <span class="nav-icon" aria-hidden="true">⚙️</span>
+              Configurações
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Área de Conteúdo Principal -->
+    <main class="main-content">
+      <header class="page-header">
+        <h1 class="page-title">Meus Cursos</h1>
+      </header>
+
+      <section class="courses-grid" aria-label="Listagem de Cursos">
+        <!-- Curso 1 -->
+        <article class="course-card" tabindex="0" aria-label="Curso: Introdução ao Direito Notarial, Progresso 75%">
+          <div class="course-thumbnail" aria-hidden="true"></div>
+          <div class="course-info">
+            <h3 class="course-title">Introdução ao Direito Notarial</h3>
+            <div class="progress-text">
+              <span>Progresso</span>
+              <span>75%</span>
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-fill" style="width: 75%"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Curso 2 -->
+        <article class="course-card" tabindex="0" aria-label="Curso: Gestão de Cartórios, Progresso 42%">
+          <div class="course-thumbnail" aria-hidden="true"></div>
+          <div class="course-info">
+            <h3 class="course-title">Gestão de Cartórios</h3>
+            <div class="progress-text">
+              <span>Progresso</span>
+              <span>42%</span>
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-fill" style="width: 42%"></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Curso 3 -->
+        <article class="course-card" tabindex="0" aria-label="Curso: Tecnologia para Serventias, Progresso 100%">
+          <div class="course-thumbnail" aria-hidden="true"></div>
+          <div class="course-info">
+            <h3 class="course-title">Tecnologia para Serventias</h3>
+            <div class="progress-text">
+              <span>Progresso</span>
+              <span>100%</span>
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-fill" style="width: 100%"></div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <!-- Carregamento do Módulo do Tema Dinâmico -->
+  <script type="module" src="./src/components/theme-loader.js"></script>
+</body>
+</html>
