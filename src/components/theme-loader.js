@@ -9,10 +9,10 @@ class ThemeLoader {
   constructor() {
     this.root = document.documentElement;
     this.defaultTheme = {
-      primary: '#2D3A6E',
+      primary: '#1E2A5A',
       secondary: '#87CECA',
       background: '#F4F6FA',
-      text: '#1E2A5A'
+      text: '#FFFFFF'
     };
   }
 

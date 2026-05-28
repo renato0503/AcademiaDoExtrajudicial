@@ -42,20 +42,27 @@ body {
   border-radius: 50%;
 }
 
-/* Diamante decorativo (como nas imagens) */
+/* Diamante decorativo (marca d'água sutil no fundo) */
 .sidebar::after {
   content: '';
   position: absolute;
-  top: 120px;
-  left: 50%;
-  transform: translateX(-50%) rotate(45deg);
-  width: 80px;
-  height: 80px;
+  bottom: -30px;
+  right: -30px;
+  transform: rotate(45deg);
+  width: 120px;
+  height: 120px;
   background: var(--teal-gradient);
   border-radius: var(--radius-diamond);
-  box-shadow: 0 8px 24px rgba(135, 206, 202, 0.3);
-  opacity: 0.9;
-  pointer-events: none; /* Evita bloquear interações caso se sobreponha */
+  box-shadow: 0 8px 32px rgba(135, 206, 202, 0.2);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Garante que o menu fique sobreposto ao diamante de fundo */
+.sidebar nav {
+  position: relative;
+  z-index: 2;
 }
 
 /* Logo na sidebar */
