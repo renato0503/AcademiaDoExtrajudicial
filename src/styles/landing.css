@@ -505,6 +505,16 @@ body {
   grid-template-columns: 1fr 1.2fr;
 }
 
+.beneficio-row.reverse .beneficio-visual {
+  grid-column: 2;
+  order: 2;
+}
+
+.beneficio-row.reverse .beneficio-content {
+  grid-column: 1;
+  order: 1;
+}
+
 .beneficio-visual {
   background: linear-gradient(135deg, var(--bg-light) 0%, #E8ECF4 100%);
   border-radius: var(--radius-lg);
