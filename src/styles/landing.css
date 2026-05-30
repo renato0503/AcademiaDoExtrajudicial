@@ -1306,8 +1306,36 @@ body {
   }
 
   .hero-content {
-    order: 1;
+    order: 2;
     width: 100%;
+  }
+
+  /* Ícone estático centralizado ACIMA da tag */
+  .hero-visual {
+    order: 0;
+    margin-bottom: var(--space-sm);
+  }
+
+  .hero-brand-icon-floating,
+  .hero-brand-icon-floating-desktop {
+    position: static;
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-md);
+    box-shadow: none;
+    animation: none;
+    background: transparent;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .floating-icon-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    transform: none;
   }
 
   .hero-tag {
@@ -1339,11 +1367,6 @@ body {
     padding: var(--space-md);
     font-size: 0.9rem;
     justify-content: center;
-  }
-
-  .hero-visual {
-    order: 0;
-    margin-bottom: var(--space-md);
   }
 
   .hero-card-mockup {
