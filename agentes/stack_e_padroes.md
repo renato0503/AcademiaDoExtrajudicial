@@ -3,52 +3,157 @@
 ## 🎯 Objetivo
 Garantir código limpo, performático e fácil de customizar, usando apenas JS/HTML/CSS puros + Firebase v9 modular.
 
+---
+
 ## 🧱 Estrutura de Pastas
 ```
 /src
-  /components     (header, course-card, progress-bar, theme-loader, etc.)
-  /services       (auth.js, firestore.js, storage.js, pdf.js, gamification.js)
-  /utils          (formatters.js, validators.js, constants.js, theme.js)
-  /styles         (main.css, variables.css, utilities.css, components.css)
-  /pages          (dashboard, course-player, admin-panel, certificate, login)
+  /components     (Header.js, Footer.js, theme-loader.js, landing.js, certificates.js, dashboard.js)
+  /services      (firebase.js, auth.js)
+  /styles        (variables.css, layout.css, landing.css)
+  /utils         (constants.js, helpers.js)
 /public
-  /assets         (icons, fallbacks, logo)
-  index.html
-firebase.json     (config de hosting, storage, firestore)
+  logo_atual.png, icone.png, *.jpg (cursos)
+/index.html      (Landing Page)
+/dashboard.html  (Painel do Aluno)
 ```
+
+---
 
 ## 📜 Padrões de Código
-- **JS**: ES6+ modules, `const`/`let` obrigatório, funções pequenas (<30 linhas), JSDoc in `services/`.
-- **HTML**: Semântico (`<section>`, `<article>`, `<nav>`), `aria-*` onde necessário, evitar inline styles.
-- **CSS**: Mobile-first, CSS Variables para tema, Flexbox/Grid, BEM ou utilitários leves. Zero `!important`.
-- **Componentização**: Use `document.createElement()`, `template` tags ou Web Components simples. Eventos delegados.
-- **Estado**: Gerenciado em objetos imutáveis. Nunca modifique props do Firebase diretamente. Use `updateDoc()`.
+
+### JavaScript (ES6+)
+- Módulos ES6 (`import`/`export`)
+- `const`/`let` obrigatório
+- Funções pequenas (< 30 linhas)
+- JSDoc em services
+- Web Components para reutilização
+
+### HTML
+- Semântico (`<section>`, `<article>`, `<nav>`)
+- `aria-*` para acessibilidade
+- Sem inline styles
+- Caminhos relativos (`./src/...`)
+
+### CSS
+- Mobile-first (base styles são mobile)
+- CSS Variables para temas
+- Flexbox/Grid para layouts
+- BEM lite para nomenclatura
+- Zero `!important`
+- Espaçamentos em `rem`, não `px`
+
+### Componentização
+- `customElements.define()` para Web Components
+- Shadow DOM opcional
+- Eventos delegados
+
+---
 
 ## 🔌 Integração Firebase
-- Use **SDK v9 modular**: `import { getFirestore, doc, getDoc } from "firebase/firestore";`
-- Inicialize em `app.js` com `initializeApp(firebaseConfig)`.
-- `firebaseConfig` em variáveis de ambiente ou `config.js` não versionado.
-- Regras de Firestore devem ser testadas localmente com `firebase emulators:start`.
-- Use `onSnapshot()` apenas para UIs em tempo real. Prefira `getDoc()/getDocs()` para listas estáticas.
+
+### SDK v9 Modular
+```javascript
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+```
+
+### Inicialização
+```javascript
+// firebase.js
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+
+const firebaseConfig = { ... };
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+```
+
+### Modo Demonstração
+Quando Firebase não configurado, exibe warnings mas não bloqueia funcionalidade local.
+
+---
 
 ## 🎨 Customização e Responsividade
-- Breakpoints: `320px`, `768px`, `1024px`, `1440px`.
-- Grid fluido: `grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));`
-- Imagens/vídeos: `max-width: 100%; height: auto;`, `loading="lazy"`, `decoding="async"`.
-- Fonte: `clamp(1rem, 1.5vw, 1.25rem)` para texto base.
-- Tema dinâmico: Busque `theme/{branchId}` no `DOMContentLoaded`, injete em `:root`.
+
+### Breakpoints
+```css
+/* Mobile */
+@media (max-width: 767px) { }
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px) { }
+
+/* Desktop */
+@media (min-width: 1024px) { }
+```
+
+### CSS Variables (Theme)
+```css
+:root {
+  --primary: var(--theme-primary, #0B1B5E);
+  --secondary: var(--theme-secondary, #39C2D7);
+  --font-main: var(--theme-font, 'Lato', sans-serif);
+  --radius: var(--theme-radius, 0.5rem);
+}
+```
+
+### Tema Dinâmico
+- `<theme-loader>` busca `theme/{branchId}` no Firestore
+- Injeta variáveis em `:root`
+
+---
 
 ## 🧪 Testes e Validação
-- Teste em Chrome, Firefox, Safari, Edge (desktop + mobile).
-- Valide formulários com `constraint validation API` + feedback visual.
-- Simule offline: `navigator.onLine`, cache básico com `localStorage` para progresso pendente.
-- Use `console.warn()` para regras de negócio violadas, nunca `console.log()` em prod.
+
+- Chrome, Firefox, Safari, Edge (desktop + mobile)
+- Lighthouse: Performance, Accessibility, Best Practices > 90
+- Form validation com Constraint Validation API
+- Offline: `navigator.onLine` + localStorage para progresso pendente
+- `console.warn()` para regras violadas (não `console.log`)
+
+---
 
 ## ⚠️ Guardrails
-- Nunca exponha chaves de API ou URLs de Storage no HTML.
-- Não use `innerHTML` sem sanitização. Prefira `textContent` ou `DOMParser`.
-- Limite `onSnapshot` listeners. Desregistre com `unsubscribe()` no `beforeunload`.
-- Commit message: `feat: ...`, `fix: ...`, `refactor: ...`, `chore: ...`.
-- Sempre inclua `try/catch` com fallback UI em chamadas Firebase.
-- Documente contratos de dados in `utils/constants.js` como objetos imutáveis.
+
+1. **Nunca exponha chaves de API** no frontend
+2. **Não usar `innerHTML`** sem sanitização
+3. **Limpar `onSnapshot` listeners** no `beforeunload`
+4. **Sempre `try/catch`** em chamadas Firebase
+5. **Commit messages:** `feat:`, `fix:`, `refactor:`, `chore:`
+6. **Documentar contratos** de dados em `utils/constants.js`
+
+---
+
+## 📱 Mobile-First Strategy
+
+### Desktop First (OLD - não usar)
+```css
+.desktop-style { ... }
+@media (max-width: 767px) { .mobile-style { ... } }
 ```
+
+### Mobile-First (CORRETO)
+```css
+.mobile-style { ... }
+@media (min-width: 768px) { .tablet-style { ... } }
+@media (min-width: 1024px) { .desktop-style { ... } }
+```
+
+---
+
+## 🔄 Deploy Workflow
+
+```mermaid
+graph TD
+    A[Código Local] -->|git push| B[GitHub]
+    B -->|Action| C[npm install]
+    C -->|Action| D[npm run build]
+    D -->|Action| E[Upload dist/]
+    E -->|Action| F[GitHub Pages]
+```
+
+---
+
+*Documento atualizado em: 30/05/2026*
+*Versão: 2.0*
