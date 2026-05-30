@@ -204,20 +204,6 @@ class MainHeader extends HTMLElement {
         }, 100);
       });
     });
-
-    // Show floating button on scroll
-    const floatingNav = this.querySelector('.mobile-bottom-nav');
-    const handleScrollForMobile = () => {
-      if (window.scrollY > 200) {
-        floatingNav.classList.add('visible');
-      } else {
-        floatingNav.classList.remove('visible');
-        // Force close menu if open
-        closeMenu();
-      }
-    };
-
-    window.addEventListener('scroll', handleScrollForMobile, { passive: true });
   }
 
   setupSmoothScroll() {

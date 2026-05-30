@@ -1078,25 +1078,19 @@ body {
     display: none !important;
   }
 
-  /* FLOATING MENU BUTTON - Escondido por padrão */
+  /* FLOATING MENU BUTTON - Sempre visível, próximo da base */
   .mobile-bottom-nav {
     display: block !important;
     position: fixed;
-    bottom: var(--space-lg);
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: 24px;
+    left: 24px;
     z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
+    opacity: 1;
+    visibility: visible;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .mobile-bottom-nav.visible {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  /* Botão flutuante principal */
+  /* Botão flutuante principal - SEM TARJA BRANCA */
   .floating-menu-btn {
     width: 56px;
     height: 56px;
@@ -1107,9 +1101,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 20px rgba(135, 206, 202, 0.4);
+    box-shadow: 0 4px 20px rgba(135, 206, 202, 0.4), 0 2px 8px rgba(0,0,0,0.1);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    margin: 0 auto;
   }
 
   .floating-menu-btn svg {
@@ -1122,7 +1115,7 @@ body {
 
   .floating-menu-btn:hover {
     transform: scale(1.1);
-    box-shadow: 0 6px 25px rgba(135, 206, 202, 0.5);
+    box-shadow: 0 6px 25px rgba(135, 206, 202, 0.5), 0 2px 8px rgba(0,0,0,0.15);
   }
 
   .floating-menu-btn:active {
@@ -1133,23 +1126,23 @@ body {
   .mobile-nav-expanded {
     position: absolute;
     bottom: 70px;
-    left: 50%;
-    transform: translateX(-50%) scale(0.8);
+    left: 0;
+    transform: translateX(0) scale(0.8);
     background: var(--bg-white);
     border-radius: var(--radius-xl);
-    box-shadow: 0 8px 40px rgba(11, 27, 94, 0.2);
-    padding: var(--space-sm);
-    min-width: 280px;
+    box-shadow: 0 8px 40px rgba(11, 27, 94, 0.25);
+    padding: var(--space-xs);
+    min-width: 260px;
     opacity: 0;
     visibility: hidden;
     transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    transform-origin: bottom center;
+    transform-origin: bottom left;
   }
 
   .mobile-nav-expanded.open {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) scale(1);
+    transform: translateX(0) scale(1);
   }
 
   /* Alça decorativa no topo do menu */
@@ -1157,8 +1150,7 @@ body {
     content: '';
     position: absolute;
     bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 16px;
     width: 40px;
     height: 4px;
     background: rgba(11, 27, 94, 0.1);
