@@ -1,10 +1,11 @@
 /**
  * Web Component: MainHeader
- * Header institucional com menu responsivo e navegação fluida.
+ * Header institucional (desktop) + Bottom Nav (mobile)
  */
 class MainHeader extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
+      <!-- Desktop Header (hidden on mobile) -->
       <header class="landing-header" id="landing-header">
         <div class="header-container">
           <a href="#inicio" class="header-logo">
@@ -35,15 +36,60 @@ class MainHeader extends HTMLElement {
           </nav>
         </div>
       </header>
+
+      <!-- Mobile Bottom Navigation -->
+      <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Navegação Mobile">
+        <a href="#inicio" class="bottom-nav-item active" data-section="inicio">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+          <span>Início</span>
+        </a>
+        <a href="#cursos" class="bottom-nav-item" data-section="cursos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+          <span>Cursos</span>
+        </a>
+        <a href="#trilhas" class="bottom-nav-item" data-section="trilhas">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          <span>Trilhas</span>
+        </a>
+        <a href="./dashboard.html" class="bottom-nav-item cta-btn" data-section="cta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+        </a>
+        <a href="#certificados" class="bottom-nav-item" data-section="certificados">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <circle cx="12" cy="8" r="7"></circle>
+            <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+          </svg>
+          <span>Certs</span>
+        </a>
+        <a href="#contato" class="bottom-nav-item" data-section="contato">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+          </svg>
+          <span>Contato</span>
+        </a>
+      </nav>
+      
       <div class="menu-backdrop" id="menu-backdrop"></div>
     `;
 
-    this.setupScrollEffect();
-    this.setupMobileMenu();
+    this.setupDesktopHeader();
+    this.setupMobileBottomNav();
     this.setupSmoothScroll();
   }
 
-  setupScrollEffect() {
+  setupDesktopHeader() {
     const header = this.querySelector('#landing-header');
     if (!header) return;
     
@@ -59,62 +105,60 @@ class MainHeader extends HTMLElement {
     handleScroll();
   }
 
-  setupMobileMenu() {
-    const toggle = this.querySelector('#menu-toggle');
-    const nav = this.querySelector('#header-nav');
-    const backdrop = this.querySelector('#menu-backdrop');
+  setupMobileBottomNav() {
+    const bottomNav = this.querySelector('#mobile-bottom-nav');
+    const navItems = bottomNav.querySelectorAll('.bottom-nav-item');
     
-    if (!toggle || !nav) return;
-
-    const closeMenu = () => {
-      nav.classList.remove('open');
-      backdrop.classList.remove('active');
-      toggle.classList.remove('active');
-      toggle.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    };
-
-    const openMenu = () => {
-      nav.classList.add('open');
-      backdrop.classList.add('active');
-      toggle.classList.add('active');
-      toggle.setAttribute('aria-expanded', 'true');
-      document.body.style.overflow = 'hidden';
-    };
-
-    toggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (nav.classList.contains('open')) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
-    });
-
-    if (backdrop) {
-      backdrop.addEventListener('click', closeMenu);
-    }
-
-    // Fecha menu ao clicar em link
-    const links = nav.querySelectorAll('.menu-link');
-    links.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href');
-        closeMenu();
+    navItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        const href = item.getAttribute('href');
         
-        setTimeout(() => {
-          const target = document.querySelector(targetId);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        }, 100);
+        // Se não é link interno (CTA), não previne
+        if (!href.startsWith('#')) return;
+        
+        e.preventDefault();
+        const targetId = href;
+        const target = document.querySelector(targetId);
+        
+        if (target) {
+          // Remove active de todos
+          navItems.forEach(nav => nav.classList.remove('active'));
+          // Adiciona active ao clicado
+          item.classList.add('active');
+          
+          // Scroll suave
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
     });
+
+    // Observador para ativar item baseado na seção visível
+    const sections = document.querySelectorAll('section[id]');
+    const observerOptions = {
+      root: null,
+      rootMargin: '-30% 0px -70% 0px',
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navItems.forEach(item => {
+            if (item.dataset.section === id) {
+              item.classList.add('active');
+            } else if (!item.classList.contains('cta-btn')) {
+              item.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => observer.observe(section));
   }
 
   setupSmoothScroll() {
-    // Observador para marcar link ativo durante scroll
     const links = this.querySelectorAll('.menu-link');
     const sections = document.querySelectorAll('section[id]');
     
