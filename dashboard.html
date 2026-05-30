@@ -8,52 +8,126 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Great+Vibes&display=swap" rel="stylesheet">
   
-  <!-- Favicon Moderno (Emoji Diamante Teal) -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
+  <!-- jsPDF CDN para geração de certificados -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
+  <!-- Favicon & Apple Touch Icon -->
+  <link rel="icon" type="image/png" href="./icone.png">
+  <link rel="apple-touch-icon" href="./icone.png">
   
   <!-- Stylesheets -->
   <link rel="stylesheet" href="./src/styles/variables.css">
   <link rel="stylesheet" href="./src/styles/layout.css">
 </head>
 <body>
+  <!-- Header Superior Mobile -->
+  <header class="mobile-top-header">
+    <div class="mobile-logo-container">
+      <img src="./logo_atual.png" alt="Logo Academia do Extrajudicial" class="mobile-logo-img">
+    </div>
+    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Abrir Menu Lateral">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Drawer Menu Mobile (Opções Secundárias) -->
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="drawer-header">
+      <span class="drawer-title">Mais Opções</span>
+      <button class="close-drawer" id="btn-close-drawer" aria-label="Fechar Menu">&times;</button>
+    </div>
+    <nav class="drawer-nav">
+      <ul class="drawer-menu">
+        <li class="drawer-item">
+          <a href="#" class="drawer-link ripple-trigger" id="drawer-progress">
+            <svg class="nav-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+            Progresso
+          </a>
+        </li>
+        <li class="drawer-item">
+          <a href="#" class="drawer-link ripple-trigger" id="drawer-favorites">
+            <svg class="nav-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            Favoritos
+          </a>
+        </li>
+        <li class="drawer-item">
+          <a href="#" class="drawer-link ripple-trigger" id="drawer-history">
+            <svg class="nav-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Histórico
+          </a>
+        </li>
+        <li class="drawer-item">
+          <a href="#" class="drawer-link ripple-trigger" id="drawer-settings">
+            <svg class="nav-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            Configurações
+          </a>
+        </li>
+        <li class="drawer-item drawer-separator"></li>
+        <li class="drawer-item">
+          <a href="./index.html" class="drawer-link logout-link ripple-trigger">
+            <svg class="nav-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            Sair da Conta
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="mobile-drawer-overlay" id="mobile-drawer-overlay"></div>
+
   <div class="app-container">
     <!-- Sidebar Lateral -->
     <aside class="sidebar">
       <div class="logo-container">
-        <img src="./logo.png" alt="Logo Academia do Extrajudicial" class="logo-img">
+        <img src="./logo_atual.png" alt="Logo Academia do Extrajudicial" class="logo-img">
       </div>
 
       <nav aria-label="Navegação Principal">
         <ul class="nav-menu">
           <li class="nav-item">
             <a href="#" class="nav-link active" id="nav-dashboard">
-              <span class="nav-icon" aria-hidden="true">📊</span>
-              Dashboard
+              <svg class="nav-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+              Painel
             </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link" id="nav-courses">
-              <span class="nav-icon" aria-hidden="true">📚</span>
+              <svg class="nav-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
               Meus Cursos
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" id="nav-library">
-              <span class="nav-icon" aria-hidden="true">📖</span>
-              Biblioteca
-            </a>
-          </li>
-          <li class="nav-item">
             <a href="#" class="nav-link" id="nav-certificates">
-              <span class="nav-icon" aria-hidden="true">🏆</span>
+              <svg class="nav-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
               Certificados
             </a>
           </li>
           <li class="nav-item">
+            <a href="#" class="nav-link" id="nav-progress">
+              <svg class="nav-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+              Progresso
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" id="nav-favorites">
+              <svg class="nav-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              Favoritos
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" id="nav-history">
+              <svg class="nav-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              Histórico
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="#" class="nav-link" id="nav-settings">
-              <span class="nav-icon" aria-hidden="true">⚙️</span>
+              <svg class="nav-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
               Configurações
             </a>
           </li>
@@ -63,60 +137,526 @@
 
     <!-- Área de Conteúdo Principal -->
     <main class="main-content">
-      <header class="page-header">
-        <h1 class="page-title">Meus Cursos</h1>
-      </header>
+      
+      <!-- Aba 1: Painel / Dashboard (Ativa por padrão) -->
+      <div id="tab-dashboard-content" class="tab-content active">
+        <!-- Indicador de Pull to Refresh -->
+        <div id="pull-to-refresh-indicator" class="pull-refresh-indicator">
+          <svg class="spinner-svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="2" x2="12" y2="6"></line>
+            <line x1="12" y1="18" x2="12" y2="22"></line>
+            <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+            <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+            <line x1="2" y1="12" x2="6" y2="12"></line>
+            <line x1="18" y1="12" x2="22" y2="12"></line>
+            <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+            <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+          </svg>
+          <span>Deslize para atualizar...</span>
+        </div>
 
-      <section class="courses-grid" aria-label="Listagem de Cursos">
-        <!-- Curso 1 -->
-        <article class="course-card" tabindex="0" aria-label="Curso: Introdução ao Direito Notarial, Progresso 75%">
-          <div class="course-thumbnail" aria-hidden="true"></div>
-          <div class="course-info">
-            <h3 class="course-title">Introdução ao Direito Notarial</h3>
-            <div class="progress-text">
-              <span>Progresso</span>
-              <span>75%</span>
+        <header class="page-header" style="border-bottom: 1px solid rgba(11,27,94,0.06); padding-bottom: var(--space-md); margin-bottom: var(--space-xl);">
+          <div>
+            <h1 class="page-title" style="margin-bottom: var(--space-xs); font-family: var(--font-display); font-weight: 700; color: var(--blue-deep);">Olá, Renato Rosa</h1>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">Bem-vindo de volta ao seu painel de capacitação.</p>
+          </div>
+          <div class="desktop-only" style="font-size: 0.85rem; color: var(--text-secondary); text-align: right;">
+            <strong>Perfil: Aluno</strong><br>
+            <span>29 de Maio de 2026</span>
+          </div>
+        </header>
+
+        <!-- Seção de Widgets do Painel -->
+        <div class="widgets-container">
+          <!-- Widget 1: Cursos em andamento -->
+          <div class="widget-card status-card animated-fade-in" style="--stagger-delay: 1;">
+            <!-- Skeleton Structure -->
+            <div class="widget-skeleton">
+              <div class="skeleton-header">
+                <div class="skeleton-line short"></div>
+                <div class="skeleton-circle"></div>
+              </div>
+              <div class="skeleton-value"></div>
+              <div class="skeleton-line long"></div>
+              <div class="skeleton-line short"></div>
             </div>
-            <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-              <div class="progress-fill" style="width: 75%"></div>
+            <!-- Card Actual Content -->
+            <div class="widget-actual-content">
+              <div class="widget-header-row">
+                <span class="widget-title">Cursos em andamento</span>
+                <div class="widget-icon-wrapper progress-icon">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                </div>
+              </div>
+              <div class="widget-body-row">
+                <div class="widget-value">2 Cursos</div>
+                <div class="progress-bar">
+                  <div class="progress-fill animated-bar" data-target="58.5%" style="width: 0%;"></div>
+                </div>
+                <div class="tooltip-container">
+                  <span class="tooltip-trigger-text">Média de progresso: 58%</span>
+                  <div class="tooltip-bubble">Calculado com base na carga horária de todos os seus cursos ativos.</div>
+                </div>
+              </div>
             </div>
           </div>
-        </article>
 
-        <!-- Curso 2 -->
-        <article class="course-card" tabindex="0" aria-label="Curso: Gestão de Cartórios, Progresso 42%">
-          <div class="course-thumbnail" aria-hidden="true"></div>
-          <div class="course-info">
-            <h3 class="course-title">Gestão de Cartórios</h3>
-            <div class="progress-text">
-              <span>Progresso</span>
-              <span>42%</span>
+          <!-- Widget 2: Certificados emitidos -->
+          <div class="widget-card status-card animated-fade-in" style="--stagger-delay: 2;">
+            <!-- Skeleton Structure -->
+            <div class="widget-skeleton">
+              <div class="skeleton-header">
+                <div class="skeleton-line short"></div>
+                <div class="skeleton-circle"></div>
+              </div>
+              <div class="skeleton-value"></div>
+              <div class="skeleton-line long"></div>
             </div>
-            <div class="progress-bar" role="progressbar" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100">
-              <div class="progress-fill" style="width: 42%"></div>
+            <!-- Card Actual Content -->
+            <div class="widget-actual-content">
+              <div class="widget-header-row">
+                <span class="widget-title">Certificados emitidos</span>
+                <div class="widget-icon-wrapper success-icon">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                </div>
+              </div>
+              <div class="widget-body-row">
+                <div class="widget-value">1 Certificado</div>
+                <div class="widget-subtitle">Disponível para download imediato</div>
+              </div>
             </div>
           </div>
-        </article>
 
-        <!-- Curso 3 -->
-        <article class="course-card" tabindex="0" aria-label="Curso: Tecnologia para Serventias, Progresso 100%">
-          <div class="course-thumbnail" aria-hidden="true"></div>
-          <div class="course-info">
-            <h3 class="course-title">Tecnologia para Serventias</h3>
-            <div class="progress-text">
-              <span>Progresso</span>
-              <span>100%</span>
+          <!-- Widget 3: Horas estudadas -->
+          <div class="widget-card status-card animated-fade-in" style="--stagger-delay: 3;">
+            <!-- Skeleton Structure -->
+            <div class="widget-skeleton">
+              <div class="skeleton-header">
+                <div class="skeleton-line short"></div>
+                <div class="skeleton-circle"></div>
+              </div>
+              <div class="skeleton-value"></div>
+              <div class="skeleton-line long"></div>
             </div>
-            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
-              <div class="progress-fill" style="width: 100%"></div>
+            <!-- Card Actual Content -->
+            <div class="widget-actual-content">
+              <div class="widget-header-row">
+                <span class="widget-title">Horas estudadas</span>
+                <div class="widget-icon-wrapper info-icon">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+              </div>
+              <div class="widget-body-row">
+                <div class="widget-value">52h estudadas</div>
+                <div class="widget-subtitle">Tempo acumulado neste mês</div>
+              </div>
             </div>
           </div>
-        </article>
-      </section>
+        </div>
+
+        <!-- Atividade Recente e Certificado Rápido (Split View) -->
+        <div class="dashboard-split-layout">
+          <!-- Coluna 2/3: Cursos em Progresso -->
+          <div class="split-column-main card-container-box animated-fade-in" style="--stagger-delay: 4;">
+            <h3 class="split-section-title">Cursos em Progresso</h3>
+            
+            <!-- Skeleton Structure -->
+            <div class="widget-skeleton">
+              <div class="skeleton-line medium" style="margin-bottom: var(--space-md);"></div>
+              <div class="skeleton-line long" style="margin-bottom: var(--space-md);"></div>
+              <div class="skeleton-line short" style="margin-bottom: var(--space-md);"></div>
+              <div class="skeleton-line medium" style="margin-bottom: var(--space-md);"></div>
+            </div>
+
+            <!-- Card Actual Content -->
+            <div class="widget-actual-content">
+              <div class="courses-progress-carousel">
+                <div class="course-progress-item ripple-trigger">
+                  <div class="course-progress-header">
+                    <span class="course-progress-name">Direito Notarial e Registral</span>
+                    <span class="course-progress-percent">75%</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill animated-bar" data-target="75%" style="width: 0%;"></div>
+                  </div>
+                </div>
+                
+                <div class="course-progress-item ripple-trigger">
+                  <div class="course-progress-header">
+                    <span class="course-progress-name">Gestão de Cartórios</span>
+                    <span class="course-progress-percent">42%</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill animated-bar" data-target="42%" style="width: 0%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna 1/3: Certificado Disponível -->
+          <div class="split-column-side cert-promo-card animated-fade-in" style="--stagger-delay: 5;">
+            <!-- Skeleton Structure -->
+            <div class="widget-skeleton">
+              <div class="skeleton-line short" style="background: rgba(255,255,255,0.15);"></div>
+              <div class="skeleton-line long" style="background: rgba(255,255,255,0.15);"></div>
+              <div class="skeleton-line medium" style="background: rgba(255,255,255,0.15);"></div>
+              <div class="skeleton-value" style="background: rgba(255,255,255,0.15); height: 40px;"></div>
+            </div>
+
+            <!-- Card Actual Content -->
+            <div class="widget-actual-content">
+              <div class="cert-promo-content">
+                <h3 class="cert-promo-title">Certificado Disponível</h3>
+                <p class="cert-promo-desc">Parabéns! Você concluiu 100% do curso <strong>Tecnologia para Serventias</strong> e seu certificado digital está assinado e pronto.</p>
+              </div>
+              <div class="cert-promo-actions">
+                <button class="btn btn-filled btn-view-cert btn-view-cert-promo ripple-trigger" data-course-id="tecnologia-serventias" data-course-title="Tecnologia para Serventias" data-workload="40" data-teacher-name="Dr. Anselmo Arruda" data-teacher-signature="Prof. Anselmo Arruda" data-start-date="10 de Maio de 2026" data-end-date="28 de Maio de 2026">
+                  Visualizar Certificado
+                </button>
+                <button class="btn btn-outline btn-download-cert-direct ripple-trigger" data-course-id="tecnologia-serventias" data-course-title="Tecnologia para Serventias" data-workload="40" data-teacher-name="Dr. Anselmo Arruda" data-teacher-signature="Prof. Anselmo Arruda" data-start-date="10 de Maio de 2026" data-end-date="28 de Maio de 2026">
+                  <svg class="btn-icon-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                  Baixar PDF
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aba 2: Meus Cursos -->
+      <div id="tab-courses-content" class="tab-content">
+        <header class="page-header">
+          <h1 class="page-title" style="font-family: var(--font-display); font-weight: 700; color: var(--blue-deep);">Meus Cursos</h1>
+        </header>
+
+        <section class="courses-grid" aria-label="Listagem de Cursos">
+          <!-- Curso 1 -->
+          <article class="course-card" tabindex="0" aria-label="Curso: Direito Notarial e Registral, Progresso 75%">
+            <div class="course-thumbnail" aria-hidden="true" style="background-image: url('./Direito%20Notarial%20e%20Registral.jpg'); background-size: cover; background-position: center;"></div>
+            <div class="course-info">
+              <h3 class="course-title">Direito Notarial e Registral</h3>
+              <div class="progress-text">
+                <span>Progresso</span>
+                <span>75%</span>
+              </div>
+              <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-fill" style="width: 75%"></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Curso 2 -->
+          <article class="course-card" tabindex="0" aria-label="Curso: Gestão de Cartórios, Progresso 42%">
+            <div class="course-thumbnail" aria-hidden="true" style="background-image: url('./Gest%C3%A3o%20de%20Cart%C3%B3rios.jpg'); background-size: cover; background-position: center;"></div>
+            <div class="course-info">
+              <h3 class="course-title">Gestão de Cartórios</h3>
+              <div class="progress-text">
+                <span>Progresso</span>
+                <span>42%</span>
+              </div>
+              <div class="progress-bar" role="progressbar" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-fill" style="width: 42%"></div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Curso 3 -->
+          <article class="course-card" tabindex="0" aria-label="Curso: Tecnologia para Serventias, Progresso 100%">
+            <div class="course-thumbnail" aria-hidden="true" style="background-image: url('./Tecnologia%20para%20Serventias.jpg'); background-size: cover; background-position: center;"></div>
+            <div class="course-info">
+              <h3 class="course-title">Tecnologia para Serventias</h3>
+              <div class="progress-text">
+                <span>Progresso</span>
+                <span>100%</span>
+              </div>
+              <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-fill" style="width: 100%"></div>
+              </div>
+            </div>
+          </article>
+        </section>
+      </div>
+
+      <!-- Aba 3: Certificados Concluídos -->
+      <div id="tab-certificates-content" class="tab-content">
+        <header class="page-header">
+          <h1 class="page-title" style="font-family: var(--font-display); font-weight: 700; color: var(--blue-deep);">Meus Certificados</h1>
+        </header>
+
+        <section class="courses-grid" aria-label="Listagem de Certificados Emissíveis">
+          <!-- Certificado 1 -->
+          <article class="course-card certificate-issue-card" tabindex="0" aria-label="Certificado disponível para Tecnologia para Serventias">
+            <div class="course-thumbnail" aria-hidden="true" style="background-image: linear-gradient(rgba(11,27,94,0.4), rgba(11,27,94,0.7)), url('./Tecnologia%20para%20Serventias.jpg'); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center;">
+              <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="var(--teal-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+            </div>
+            <div class="course-info">
+              <h3 class="course-title">Tecnologia para Serventias</h3>
+              <div class="certificate-meta" style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: var(--space-md);">
+                <span>Carga Horária: <strong>40 horas</strong></span><br>
+                <span>Conclusão: <strong>28/05/2026</strong></span>
+              </div>
+              <button class="btn btn-filled btn-view-cert" style="width: 100%; font-size: 0.85rem;" data-course-id="tecnologia-serventias" data-course-title="Tecnologia para Serventias" data-workload="40" data-teacher-name="Dr. Anselmo Arruda" data-teacher-signature="Prof. Anselmo Arruda" data-start-date="10 de Maio de 2026" data-end-date="28 de Maio de 2026">
+                Visualizar Certificado
+              </button>
+            </div>
+          </article>
+        </section>
+      </div>
+
+      <!-- Aba 4: Progresso Gamificado -->
+      <div id="tab-progress-content" class="tab-content">
+        <header class="page-header">
+          <h1 class="page-title" style="font-family: var(--font-display); font-weight: 700; color: var(--blue-deep);">Progresso e Conquistas</h1>
+        </header>
+        <section class="widget-card" style="background: var(--bg-card); border-radius: var(--radius-md); padding: var(--space-xl); box-shadow: var(--shadow-sm); border: 1px solid rgba(11,27,94,0.06);">
+          <div style="display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-xl);">
+            <div style="background: rgba(57,194,215,0.1); width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--teal);">
+              <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </div>
+            <div>
+              <h2 style="font-family: var(--font-display); font-weight: 700; color: var(--blue-deep); margin: 0; font-size: 1.3rem;">Streak Atual: 5 dias seguidos</h2>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">Você está mantendo o hábito de estudos ativo!</p>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--space-md);">
+            <div style="background: var(--bg-light); border-radius: var(--radius-sm); padding: var(--space-md); text-align: center;">
+              <div style="font-size: 1.5rem; font-weight: 800; color: var(--blue-deep);">320</div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary);">Pontos Acumulados</div>
+            </div>
+            <div style="background: var(--bg-light); border-radius: var(--radius-sm); padding: var(--space-md); text-align: center;">
+              <div style="font-size: 1.5rem; font-weight: 800; color: var(--blue-deep);">Bronze III</div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary);">Nível de Graduação</div>
+            </div>
+            <div style="background: var(--bg-light); border-radius: var(--radius-sm); padding: var(--space-md); text-align: center;">
+              <div style="font-size: 1.5rem; font-weight: 800; color: var(--blue-deep);">4</div>
+              <div style="font-size: 0.8rem; color: var(--text-secondary);">Badges Desbloqueados</div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- Aba 5: Favoritos -->
+      <div id="tab-favorites-content" class="tab-content">
+        <header class="page-header">
+          <h1 class="page-title" style="font-family: var(--font-display); font-weight: 700; color: var(--blue-deep);">Meus Favoritos</h1>
+        </header>
+        <section style="background: var(--bg-card); border-radius: var(--radius-md); padding: var(--space-xl); box-shadow: var(--shadow-sm); border: 1px solid rgba(11,27,94,0.06); text-align: center; color: var(--text-secondary);">
+          <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: var(--space-md); opacity: 0.5;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <p style="font-size: 0.95rem; margin: 0;">Você ainda não favoritou nenhuma aula ou material de apoio.</p>
+        </section>
+      </div>
+
+      <!-- Aba 6: Histórico de Atividades -->
+      <div id="tab-history-content" class="tab-content">
+        <header class="page-header">
+          <h1 class="page-title" style="font-family: var(--font-display); font-weight: 700; color: var(--blue-deep);">Histórico de Atividades</h1>
+        </header>
+        <section style="background: var(--bg-card); border-radius: var(--radius-md); padding: var(--space-lg); box-shadow: var(--shadow-sm); border: 1px solid rgba(11,27,94,0.06);">
+          <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-md);">
+            <li style="display: flex; justify-content: space-between; border-bottom: 1px solid #E8ECF4; padding-bottom: var(--space-sm); font-size: 0.9rem;">
+              <div>
+                <strong>Acesso à plataforma realizado</strong>
+                <div style="font-size: 0.8rem; color: var(--text-secondary);">Dispositivo: Google Chrome no Windows</div>
+              </div>
+              <span style="color: var(--text-secondary);">Hoje, 23:30</span>
+            </li>
+            <li style="display: flex; justify-content: space-between; border-bottom: 1px solid #E8ECF4; padding-bottom: var(--space-sm); font-size: 0.9rem;">
+              <div>
+                <strong>Certificado Emitido: Tecnologia para Serventias</strong>
+                <div style="font-size: 0.8rem; color: var(--text-secondary);">Validador SHA-256 gerado</div>
+              </div>
+              <span style="color: var(--text-secondary);">28/05/2026</span>
+            </li>
+            <li style="display: flex; justify-content: space-between; border-bottom: 1px solid #E8ECF4; padding-bottom: var(--space-sm); font-size: 0.9rem;">
+              <div>
+                <strong>Curso concluído: Tecnologia para Serventias</strong>
+                <div style="font-size: 0.8rem; color: var(--text-secondary);">Aproveitamento total em quizzes</div>
+              </div>
+              <span style="color: var(--text-secondary);">28/05/2026</span>
+            </li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Aba 7: Configurações -->
+      <div id="tab-settings-content" class="tab-content">
+        <header class="page-header">
+          <h1 class="page-title" style="font-family: var(--font-display); font-weight: 700; color: var(--blue-deep);">Configurações da Conta</h1>
+        </header>
+        <section style="background: var(--bg-card); border-radius: var(--radius-md); padding: var(--space-xl); box-shadow: var(--shadow-sm); border: 1px solid rgba(11,27,94,0.06);">
+          <form style="display: flex; flex-direction: column; gap: var(--space-md); max-width: 500px;" onsubmit="event.preventDefault(); alert('Configurações atualizadas com sucesso!');">
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary);">Nome Completo (Para Emissão de Certificados)</label>
+              <input type="text" value="Renato Rosa" style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm); border: 1px solid #E8ECF4; font-family: var(--font-main);" disabled>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <label style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary);">E-mail Cadastrado</label>
+              <input type="email" value="renato.rosa@cartorio.com.br" style="padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm); border: 1px solid #E8ECF4; font-family: var(--font-main);" disabled>
+            </div>
+            <button type="submit" class="btn btn-filled" style="align-self: flex-start; margin-top: var(--space-sm);">Salvar Alterações</button>
+          </form>
+        </section>
+      </div>
+
     </main>
+
+  <!-- Modal de Visualização de Certificado -->
+  <div id="certificate-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 style="font-family: var(--font-display); font-weight: 700; color: var(--blue-deep);">Visualização do Certificado</h2>
+        <button class="close-modal-x" id="btn-close-modal-x" aria-label="Fechar">&times;</button>
+      </div>
+      <div class="modal-body">
+        <!-- O Certificado em si (proporção A4 Paisagem) -->
+        <div class="certificate-wrapper">
+          <div class="certificate-container" id="certificate-print-area" style="width: 800px; height: 565px; position: relative; box-sizing: border-box; overflow: hidden;">
+            <!-- Imagem de Fundo do Certificado (Fundo Limpo) -->
+            <img src="./certificado_fundo.png" alt="Template do Certificado" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;" />
+
+            <!-- Cabeçalho Dinâmico (Logo e Nome da Empresa) -->
+            <div id="cert-header-logo-overlay" style="position: absolute; top: 6.5%; left: 7%; z-index: 2; display: flex; align-items: center; gap: 8px;">
+              <!-- Logo da Academia do Extrajudicial -->
+              <svg width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" rx="16" fill="#0B1B5E"/>
+                <path d="M35 25H65V37H47V45H61V57H47V75H35V25Z" fill="white"/>
+                <rect x="68" y="44" width="16" height="16" transform="rotate(45 68 44)" fill="#2AABB8"/>
+              </svg>
+              <span style="font-family: var(--font-display); font-size: 0.72rem; font-weight: 700; color: #0B1B5E; letter-spacing: 0.5px;">Academia do Extrajudicial</span>
+            </div>
+
+            <!-- Título do Certificado -->
+            <div id="cert-title-overlay" style="position: absolute; top: 13%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 62%;">
+              <div style="font-family: 'Playfair Display', serif; font-size: 2.25rem; font-weight: 700; color: #0B1B5E; letter-spacing: 4px; line-height: 1.1;">CERTIFICADO</div>
+            </div>
+
+            <!-- Separador / Divisor Decorativo -->
+            <div id="cert-separator-overlay" style="position: absolute; top: 22.5%; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; align-items: center; justify-content: center; gap: 8px; width: 62%;">
+              <div style="width: 80px; height: 1px; background: linear-gradient(90deg, transparent, #0B1B5E);"></div>
+              <div style="width: 6px; height: 6px; background: #2AABB8; transform: rotate(45deg);"></div>
+              <div style="width: 10px; height: 10px; background: #0B1B5E; transform: rotate(45deg);"></div>
+              <div style="width: 6px; height: 6px; background: #2AABB8; transform: rotate(45deg);"></div>
+              <div style="width: 80px; height: 1px; background: linear-gradient(90deg, #0B1B5E, transparent);"></div>
+            </div>
+
+            <!-- Texto de Introdução -->
+            <div id="cert-intro-overlay" style="position: absolute; top: 27%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 62%;">
+              <div style="font-family: 'Lato', sans-serif; font-size: 0.78rem; color: #5A6A9E; font-weight: 500; letter-spacing: 0.5px;">Certificamos que</div>
+            </div>
+
+            <!-- Nome do Aluno -->
+            <div id="cert-student-overlay" style="position: absolute; top: 32%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 62%; height: 50px; display: flex; align-items: center; justify-content: center;">
+              <div style="font-family: var(--font-display); font-size: 1.65rem; font-weight: 800; color: #0B1B5E; text-transform: uppercase; letter-spacing: 1px;">Renato Rosa</div>
+            </div>
+
+            <!-- Texto de Conclusão -->
+            <div id="cert-conclusion-overlay" style="position: absolute; top: 41.5%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 62%;">
+              <div style="font-family: 'Lato', sans-serif; font-size: 0.78rem; color: #5A6A9E; font-weight: 500; letter-spacing: 0.5px;">concluiu com aproveitamento o curso de</div>
+            </div>
+
+            <!-- Nome do Curso -->
+            <div id="cert-course-overlay" style="position: absolute; top: 46%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 62%; height: 38px; display: flex; align-items: center; justify-content: center;">
+              <div id="cert-course-title-text" style="font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: #2AABB8; text-transform: uppercase; letter-spacing: 0.5px;">Tecnologia para Serventias</div>
+            </div>
+
+            <!-- Parágrafo Descritivo (carga horária e período) -->
+            <div id="cert-desc-overlay" style="position: absolute; top: 56.5%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 70%; height: 60px; display: flex; align-items: center; justify-content: center;">
+              <div style="font-family: 'Lato', sans-serif; font-size: 0.68rem; color: #333; line-height: 1.55;">
+                com carga horária de <strong id="cert-workload-text">40</strong> horas, realizado no período de <strong id="cert-period-text">10 de Maio de 2026</strong> a <strong id="cert-period-end-text">28 de Maio de 2026</strong>,<br>
+                abrangendo conteúdos teóricos e práticos voltados à qualificação<br>
+                profissional no âmbito dos serviços extrajudiciais.
+              </div>
+            </div>
+
+            <!-- Data e Local -->
+            <div id="cert-date-overlay" style="position: absolute; top: 70.5%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 62%; height: 32px; display: flex; align-items: center; justify-content: center;">
+              <div id="cert-city-date-text" style="font-family: 'Lato', sans-serif; font-size: 0.68rem; color: #333;">
+                Cuiabá – Mato Grosso, 29 de Maio de 2026.
+              </div>
+            </div>
+
+            <!-- QR Code (canto inferior esquerdo) -->
+            <div id="cert-qr-overlay" style="position: absolute; bottom: 7.5%; left: 4.5%; z-index: 2; width: 52px; height: 52px;">
+              <img id="cert-qrcode-img" src="" alt="QR Code de Validação" style="width: 100%; height: 100%; object-fit: contain; background: #fff;" />
+            </div>
+
+            <!-- Texto de Autenticidade do QR Code -->
+            <div id="cert-qr-text-overlay" style="position: absolute; bottom: 7.5%; left: 11.5%; z-index: 2; width: 70px; height: 52px; display: flex; align-items: center; justify-content: flex-start; text-align: left; padding: 2px; box-sizing: border-box;">
+              <div style="font-family: 'Lato', sans-serif; font-size: 0.38rem; color: #333333; line-height: 1.3;">
+                Verifique a autenticidade deste certificado escaneando o QR Code ou acessando: <span style="color: #0B1B5E; font-weight: bold; word-break: break-all;">academiodoextrajudicial.com.br/validar</span>
+              </div>
+            </div>
+
+            <!-- Número do Certificado (barra inferior) -->
+            <div id="cert-number-overlay" style="position: absolute; bottom: 1.5%; left: 50%; transform: translateX(-50%); z-index: 2; text-align: center; width: 39%; height: 18px; display: flex; align-items: center; justify-content: center;">
+              <div id="cert-code-text" style="font-family: var(--font-display); font-size: 0.6rem; font-weight: 700; color: #0B1B5E; letter-spacing: 1px;">Certificado nº AE-2026-000001</div>
+            </div>
+
+            <!-- Assinatura da Diretora (Esquerda) -->
+            <div id="cert-signature-left-overlay" style="position: absolute; bottom: 5%; left: 23%; z-index: 2; text-align: center; width: 110px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 5px; box-sizing: border-box;">
+              <div style="font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: #111; line-height: 1; margin-bottom: 2px;">Larissa Águida</div>
+              <div style="width: 100%; border-top: 1px solid rgba(11, 27, 94, 0.3); margin-bottom: 3px;"></div>
+              <div style="font-family: var(--font-display); font-size: 0.54rem; font-weight: 700; color: #111; line-height: 1.2;">Larissa Águida</div>
+              <div style="font-family: 'Lato', sans-serif; font-size: 0.48rem; color: #6E6E73; line-height: 1.2;">Diretora Executiva</div>
+            </div>
+
+            <!-- Assinatura do Professor (Direita) -->
+            <div id="cert-signature-right-overlay" style="position: absolute; bottom: 5%; right: 23%; z-index: 2; text-align: center; width: 110px; height: 80px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 5px; box-sizing: border-box;">
+              <div style="font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: #111; line-height: 1; margin-bottom: 2px;">Anselmo Arruda</div>
+              <div style="width: 100%; border-top: 1px solid rgba(11, 27, 94, 0.3); margin-bottom: 3px;"></div>
+              <div id="cert-teacher-name" style="font-family: var(--font-display); font-size: 0.54rem; font-weight: 700; color: #111; line-height: 1.2;">Dr. Anselmo Arruda</div>
+              <div style="font-family: 'Lato', sans-serif; font-size: 0.48rem; color: #6E6E73; line-height: 1.2;">Professor Responsável</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="btn-close-modal">Fechar</button>
+        <button class="btn btn-filled" id="btn-download-pdf" style="display: inline-flex; align-items: center; gap: 8px;">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Baixar PDF
+        </button>
+      </div>
+    </div>
   </div>
 
-  <!-- Carregamento do Módulo do Tema Dinâmico -->
+  <!-- Barra de Navegação Inferior (Mobile) -->
+  <nav class="mobile-bottom-nav">
+    <a href="#" class="bottom-nav-link active" id="bottom-nav-dashboard">
+      <svg class="nav-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
+      <span>Painel</span>
+    </a>
+    <a href="#" class="bottom-nav-link" id="bottom-nav-courses">
+      <svg class="nav-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+      <span>Cursos</span>
+    </a>
+    <a href="#" class="bottom-nav-link" id="bottom-nav-certificates">
+      <svg class="nav-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+      <span>Certificados</span>
+    </a>
+    <a href="#" class="bottom-nav-link" id="bottom-nav-settings">
+      <svg class="nav-svg-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 14c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      <span>Perfil</span>
+    </a>
+  </nav>
+
+  <!-- Modal de Pesquisa Rápida (Ctrl + K) -->
+  <div id="search-modal" class="modal-overlay search-modal-overlay">
+    <div class="modal-card search-modal-card">
+      <div class="search-modal-header">
+        <svg class="search-icon-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="search-input" placeholder="Buscar cursos por título... (Pressione Esc para fechar)" aria-label="Buscar cursos">
+        <span class="search-kbd-hint">ESC</span>
+      </div>
+      <div class="search-results" id="search-results-list">
+        <!-- Resultados de pesquisa gerados via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Carregamento do Módulo do Tema Dinâmico e Certificados -->
   <script type="module" src="./src/components/theme-loader.js"></script>
+  <script type="module" src="./src/components/certificates.js"></script>
 </body>
 </html>

@@ -8,29 +8,40 @@ class MainHeader extends HTMLElement {
       <header class="landing-header" id="landing-header">
         <div class="header-container">
           <a href="#inicio" class="header-logo">
-            <img src="./logo.png" alt="Logo Academia do Extrajudicial" class="header-logo-img">
+            <img src="./logo_atual.png" alt="Logo Academia do Extrajudicial" class="header-logo-img">
           </a>
           
           <button class="menu-toggle" id="menu-toggle" aria-label="Abrir Menu de Navegação" aria-expanded="false">
-            <span class="hamburger"></span>
+            <!-- Menu Mobile (Hambúrguer) -->
+            <svg class="hamburger-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <!-- Ícone Fechar (X) -->
+            <svg class="close-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
           </button>
 
           <nav class="header-nav" id="header-nav" aria-label="Navegação do Site">
             <ul class="header-menu">
               <li><a href="#inicio" class="menu-link active">Início</a></li>
-              <li><a href="#sobre" class="menu-link">Sobre</a></li>
               <li><a href="#cursos" class="menu-link">Cursos</a></li>
-              <li><a href="#beneficios" class="menu-link">Benefícios</a></li>
-              <li><a href="#depoimentos" class="menu-link">Depoimentos</a></li>
+              <li><a href="#trilhas" class="menu-link">Trilhas</a></li>
+              <li><a href="#certificados" class="menu-link">Certificados</a></li>
+              <li><a href="#institucional" class="menu-link">Institucional</a></li>
               <li><a href="#contato" class="menu-link">Contato</a></li>
             </ul>
             <div class="header-actions">
               <a href="./dashboard.html" class="btn btn-outline">Entrar</a>
-              <a href="./dashboard.html" class="btn btn-filled">Começar Agora</a>
+              <a href="./dashboard.html" class="btn btn-filled">Cadastrar</a>
             </div>
           </nav>
         </div>
       </header>
+      <div class="menu-backdrop" id="menu-backdrop"></div>
     `;
 
     this.setupScrollEffect();
@@ -64,23 +75,43 @@ class MainHeader extends HTMLElement {
   setupMobileMenu() {
     const toggle = this.querySelector('#menu-toggle');
     const nav = this.querySelector('#header-nav');
+    const backdrop = this.querySelector('#menu-backdrop');
+    const hamburgerIcon = this.querySelector('.hamburger-icon');
+    const closeIcon = this.querySelector('.close-icon');
     
     if (!toggle || !nav) return;
 
-    toggle.addEventListener('click', () => {
-      const expanded = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', !expanded);
-      nav.classList.toggle('open');
-      toggle.classList.toggle('active');
-    });
+    const toggleMenu = (forceClose = null) => {
+      const isOpen = forceClose !== null ? !forceClose : nav.classList.contains('open');
+      const expanded = !isOpen;
+      
+      toggle.setAttribute('aria-expanded', expanded);
+      nav.classList.toggle('open', expanded);
+      toggle.classList.toggle('active', expanded);
+      
+      if (backdrop) {
+        backdrop.classList.toggle('active', expanded);
+      }
+      
+      if (hamburgerIcon && closeIcon) {
+        hamburgerIcon.style.display = expanded ? 'none' : 'block';
+        closeIcon.style.display = expanded ? 'block' : 'none';
+      }
+      
+      document.body.style.overflow = expanded ? 'hidden' : '';
+    };
+
+    toggle.addEventListener('click', () => toggleMenu());
+
+    if (backdrop) {
+      backdrop.addEventListener('click', () => toggleMenu(true));
+    }
 
     // Fecha o menu móvel ao selecionar qualquer link de âncora
     const links = this.querySelectorAll('.menu-link');
     links.forEach(link => {
       link.addEventListener('click', () => {
-        toggle.setAttribute('aria-expanded', 'false');
-        nav.classList.remove('open');
-        toggle.classList.remove('active');
+        toggleMenu(true);
       });
     });
   }

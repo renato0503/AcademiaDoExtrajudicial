@@ -1,33 +1,43 @@
 /* === CORES DA MARCA (extraídas das imagens) === */
 :root {
   /* Azul profundo da sidebar/fundo */
-  --blue-deep: #1E2A5A;
-  --blue-medium: #2D3A6E;
-  --blue-light: #4A5A9E;
-  --blue-gradient: linear-gradient(180deg, #1E2A5A 0%, #2D3A6E 50%, #4A5A9E 100%);
+  --blue-deep: #0B1B5E;
+  --blue-medium: #172B7A;
+  --blue-light: #2A429E;
+  --blue-gradient: linear-gradient(180deg, #0B1B5E 0%, #172B7A 50%, #2A429E 100%);
 
-  /* Teal (diamante decorativo) */
-  --teal: #87CECA;
-  --teal-light: #A8E6E2;
-  --teal-dark: #5FB8B3;
-  --teal-gradient: linear-gradient(135deg, #87CECA 0%, #5FB8B3 100%);
+  /* Teal (diamante decorativo) / Secondary */
+  --teal: #39C2D7;
+  --teal-light: #7CE0EE;
+  --teal-dark: #1F9EB3;
+  --teal-gradient: linear-gradient(135deg, #39C2D7 0%, #1F9EB3 100%);
 
   /* Fundos */
   --bg-white: #FFFFFF;
   --bg-light: #F4F6FA;
   --bg-card: #FFFFFF;
 
+  /* Ícones e UI UX */
+  --icon-inactive: #94A3B8;
+  --icon-active: #0F172A;
+  --icon-active-alt: #0EA5E9;
+
   /* Textos */
-  --text-primary: #1E2A5A;
-  --text-secondary: #5A6A9E;
-  --text-light: #8A9ABE;
+  --text-primary: #0B1B5E;
+  --text-secondary: #6E6E73;
+  --text-light: #8E8E93;
   --text-white: #FFFFFF;
 
+  /* Feedback / Status */
+  --success: #16A34A;
+  --danger: #DC2626;
+  --warning: #F59E0B;
+
   /* Sombras (baseadas na estética clean das imagens) */
-  --shadow-sm: 0 2px 8px rgba(30, 42, 90, 0.08);
-  --shadow-md: 0 4px 16px rgba(30, 42, 90, 0.12);
-  --shadow-lg: 0 8px 32px rgba(30, 42, 90, 0.16);
-  --shadow-xl: 0 12px 48px rgba(30, 42, 90, 0.20);
+  --shadow-sm: 0 2px 8px rgba(11, 27, 94, 0.08);
+  --shadow-md: 0 4px 16px rgba(11, 27, 94, 0.12);
+  --shadow-lg: 0 8px 32px rgba(11, 27, 94, 0.16);
+  --shadow-xl: 0 12px 48px rgba(11, 27, 94, 0.20);
 
   /* Bordas e raios */
   --radius-sm: 0.5rem;
@@ -50,16 +60,16 @@
   --transition-slow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Tipografia */
-  --font-main: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-display: 'Plus Jakarta Sans', var(--font-main);
+  --font-main: 'Lato', system-ui, -apple-system, sans-serif;
+  --font-display: 'Montserrat', var(--font-main);
 }
 
-/* Tema escuro (baseado na imagem 2) */
+/* Tema escuro */
 :root[data-theme="dark"] {
   --bg-white: var(--blue-deep);
-  --bg-light: #162044;
-  --bg-card: #243060;
+  --bg-light: #060E33;
+  --bg-card: #12216E;
   --text-primary: var(--text-white);
-  --text-secondary: #A8B8E0;
-  --text-light: #6A7AAE;
+  --text-secondary: #AEAEB2;
+  --text-light: #8E8E93;
 }

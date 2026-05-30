@@ -77,6 +77,14 @@ Com a evolução do projeto, surgiu a necessidade de criar uma **Landing Page In
 - **Causa:** O navegador do usuário retém o index.html antigo de desenvolvimento em cache de sessão.
 - **Solução:** Instruído a limpar o cache ou a testar em **Janela Anônima** para descartar arquivos de sessões passadas.
 
+### ❌ Problema F: Texto do Certificado Sobreposto ao Template
+- **Causa:** O PDF gerado via jsPDF sobrepunha texto dinâmico (nome, curso, datas) aos placeholders do template de fundo, causando duplicação e ilegibilidade.
+- **Solução:** Adicionados retângulos brancos de máscara (`doc.rect(x, y, w, h, 'F')`) antes de cada texto dinâmico na função `generatePDF()` em `certificates.js`:
+  - Área do título "CERTIFICADO": retângulo em `(55, 24, 187, 14)`
+  - Área do nome do aluno: retângulo em `(50, 64, 197, 14)`
+  - Área do nome do curso: retângulo em `(50, 94, 197, 12)`
+- **Documentação:** A técnica foi adicionada em `funcionalidades_core.md` como boa prática de renderização de certificados.
+
 ---
 
 ## 📈 Resumo do Fluxo de Trabalho e Navegação

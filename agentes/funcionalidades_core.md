@@ -27,6 +27,7 @@ Implementar regras de negócio essenciais para uma universidade corporativa de c
 - Estrutura: Nome do colaborador, título do curso, data de conclusão, hash SHA-256 (`userId_courseId_issuedAt`), QR Code com URL de validação.
 - Armazene `pdfUrl` e `hash` no Firestore. Validação pública via rota `/validate?hash=...` que consulta `certificates/{id}`.
 - Envio por e-mail via Firebase Functions (`nodemailer` ou SendGrid) após `progress.completed`.
+- **Técnica de renderização**: Antes de inserir texto dinâmico, desenhe retângulo branco (`doc.rect(x, y, w, h, 'F')`) como máscara para evitar sobreposição com placeholders do template de fundo.
 
 ## 📊 Relatórios e Dashboards (RH/Admin)
 - Métricas: Taxa de conclusão, tempo médio de tela, cursos atrasados, engajamento por departamento.
