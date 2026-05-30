@@ -1546,6 +1546,13 @@ body {
 
 /* 4. Breakpoint Desktop: min-width 1024px */
 @media (min-width: 1024px) {
+  /* OCULTAR ELEMENTOS MOBILE NO DESKTOP */
+  .floating-menu-btn,
+  .mobile-nav-expanded,
+  .mobile-menu-backdrop {
+    display: none !important;
+  }
+
   /* Header Desktop */
   .desktop-header {
     position: fixed;
