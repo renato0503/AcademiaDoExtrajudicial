@@ -1078,165 +1078,229 @@ body {
     display: none !important;
   }
 
-  /* BOTTOM NAVIGATION - Menu fixo na base centralizado */
+  /* FLOATING MENU BUTTON - Escondido por padrão */
   .mobile-bottom-nav {
-    display: flex !important;
+    display: block !important;
     position: fixed;
-    bottom: 0;
+    bottom: var(--space-lg);
     left: 50%;
     transform: translateX(-50%);
-    width: auto;
-    max-width: 95%;
-    background: var(--bg-white);
-    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-    box-shadow: 0 -4px 20px rgba(11, 27, 94, 0.15);
-    padding: var(--space-sm) var(--space-md);
-    z-index: 999;
-    justify-content: center;
-    align-items: center;
-    gap: var(--space-xs);
-    border-top: 1px solid rgba(11, 27, 94, 0.08);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .mobile-bottom-nav::before {
+  .mobile-bottom-nav.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Botão flutuante principal */
+  .floating-menu-btn {
+    width: 56px;
+    height: 56px;
+    background: var(--teal-gradient);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(135, 206, 202, 0.4);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin: 0 auto;
+  }
+
+  .floating-menu-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--blue-deep);
+    stroke-width: 2;
+    transition: transform 0.3s ease;
+  }
+
+  .floating-menu-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 25px rgba(135, 206, 202, 0.5);
+  }
+
+  .floating-menu-btn:active {
+    transform: scale(0.95);
+  }
+
+  /* Menu expandido */
+  .mobile-nav-expanded {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    background: var(--bg-white);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 8px 40px rgba(11, 27, 94, 0.2);
+    padding: var(--space-sm);
+    min-width: 280px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: bottom center;
+  }
+
+  .mobile-nav-expanded.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) scale(1);
+  }
+
+  /* Alça decorativa no topo do menu */
+  .mobile-nav-expanded::before {
     content: '';
     position: absolute;
-    top: 8px;
+    bottom: -8px;
     left: 50%;
     transform: translateX(-50%);
     width: 40px;
     height: 4px;
-    background: rgba(11, 27, 94, 0.15);
+    background: rgba(11, 27, 94, 0.1);
     border-radius: 2px;
   }
 
-  .bottom-nav-item {
+  /* Items do menu expandido */
+  .nav-expanded-item {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: var(--space-sm) var(--space-md);
-    color: var(--text-secondary);
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+    color: var(--text-primary);
     text-decoration: none;
-    font-size: 0.7rem;
-    font-weight: 600;
-    gap: 4px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: var(--radius-lg);
-    min-width: 60px;
-    position: relative;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+    border-bottom: 1px solid rgba(11, 27, 94, 0.05);
   }
 
-  .bottom-nav-item svg {
-    width: 22px;
-    height: 22px;
-    stroke: var(--icon-inactive);
-    stroke-width: 1.75;
-    transition: all 0.3s ease;
+  .nav-expanded-item:last-child {
+    border-bottom: none;
   }
 
-  .bottom-nav-item:hover,
-  .bottom-nav-item.active {
+  .nav-expanded-item:hover,
+  .nav-expanded-item.active {
+    background: rgba(57, 194, 215, 0.08);
     color: var(--teal);
-    transform: translateY(-2px);
   }
 
-  .bottom-nav-item:hover svg,
-  .bottom-nav-item.active svg {
-    stroke: var(--teal);
-    transform: scale(1.1);
+  .nav-expanded-item svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 1.75;
+    flex-shrink: 0;
   }
 
-  .bottom-nav-item.active::after {
+  .nav-expanded-item span {
+    flex: 1;
+  }
+
+  /* Indicador de badge */
+  .nav-expanded-item.has-badge::after {
     content: '';
-    position: absolute;
-    top: -4px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-    background: var(--teal);
-    border-radius: 50%;
-    animation: pulse-dot 2s ease infinite;
-  }
-
-  @keyframes pulse-dot {
-    0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
-    50% { opacity: 0.7; transform: translateX(-50%) scale(1.3); }
-  }
-
-  /* Indicador de badge quando ativo */
-  .bottom-nav-item.has-badge::before {
-    content: '';
-    position: absolute;
-    top: 2px;
-    right: 8px;
     width: 8px;
     height: 8px;
     background: var(--danger);
     border-radius: 50%;
-    border: 2px solid var(--bg-white);
+    flex-shrink: 0;
   }
 
-  /* Botão central destacado (CTA) */
-  .bottom-nav-item.cta-btn {
+  /* Item CTA no menu */
+  .nav-expanded-item.cta-item {
     background: var(--teal-gradient);
-    color: var(--blue-deep);
-    border-radius: 50%;
-    width: 56px;
-    height: 56px;
-    min-width: 56px;
-    padding: 0;
-    box-shadow: 0 4px 12px rgba(135, 206, 202, 0.4);
-    margin-top: -20px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--blue-deep) !important;
+    font-weight: 700;
+    text-align: center;
+    justify-content: center;
+    margin-top: var(--space-xs);
   }
 
-  .bottom-nav-item.cta-btn svg {
+  .nav-expanded-item.cta-item:hover {
+    background: var(--teal);
+  }
+
+  .nav-expanded-item.cta-item svg {
     stroke: var(--blue-deep);
-    width: 24px;
-    height: 24px;
   }
 
-  .bottom-nav-item.cta-btn:hover {
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 6px 20px rgba(135, 206, 202, 0.5);
+  /* Divisor */
+  .nav-expanded-divider {
+    height: 1px;
+    background: rgba(11, 27, 94, 0.08);
+    margin: var(--space-xs) 0;
+  }
   }
 
-  .bottom-nav-item.cta-btn:active {
-    transform: translateY(-2px) scale(0.98);
+  /* Botão de fechar/collapse */
+  .nav-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: rgba(11, 27, 94, 0.05);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    margin: var(--space-sm) auto var(--space-xs);
+    transition: all 0.2s ease;
   }
 
-  /* Spacer para o bottom nav */
+  .nav-close-btn:hover {
+    background: rgba(11, 27, 94, 0.1);
+    transform: scale(1.1);
+  }
+
+  .nav-close-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--text-secondary);
+    stroke-width: 2;
+  }
+
+  /* Backdrop escuro quando menu aberto */
+  .mobile-menu-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(11, 27, 94, 0.4);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-menu-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Spacer para o menu */
   .bottom-nav-spacer {
-    height: 80px;
+    height: 60px;
     display: block;
   }
 
-  /* HERO - Ajustar padding para não ficar atrás do bottom nav */
+  /* HERO - Ajustar padding */
   .hero-section {
-    padding-bottom: calc(var(--space-2xl) + 80px);
-  }
-
-  /* Ajuste geral do body para o bottom nav */
-  main {
-    padding-bottom: 20px;
+    padding-bottom: calc(var(--space-2xl) + 60px);
   }
 
   /* Menu Backdrop - não necessário agora, oculto */
   .menu-backdrop {
     display: none !important;
   }
-
-  /* Hero Mobile */
-  .hero-section {
-    padding: 80px var(--space-md) var(--space-2xl);
-    min-height: 100vh;
-  }
-
-  .hero-container {
-    grid-template-columns: 1fr;
-    gap: var(--space-xl);
+}
     text-align: center;
   }
 
