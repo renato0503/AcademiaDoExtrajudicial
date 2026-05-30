@@ -1,6 +1,6 @@
 /**
  * Web Component: MainHeader
- * Define um header institucional responsivo com efeito translúcido no scroll e menu mobile hamburger.
+ * Header institucional com menu responsivo e navegação fluida.
  */
 class MainHeader extends HTMLElement {
   connectedCallback() {
@@ -12,17 +12,11 @@ class MainHeader extends HTMLElement {
           </a>
           
           <button class="menu-toggle" id="menu-toggle" aria-label="Abrir Menu de Navegação" aria-expanded="false">
-            <!-- Menu Mobile (Hambúrguer) -->
-            <svg class="hamburger-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-            <!-- Ícone Fechar (X) -->
-            <svg class="close-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
-              <line x1="6" y1="6" x2="18" y2="18"></line>
-            </svg>
+            <span class="hamburger-lines">
+              <span class="line line-1"></span>
+              <span class="line line-2"></span>
+              <span class="line line-3"></span>
+            </span>
           </button>
 
           <nav class="header-nav" id="header-nav" aria-label="Navegação do Site">
@@ -49,9 +43,6 @@ class MainHeader extends HTMLElement {
     this.setupSmoothScroll();
   }
 
-  /**
-   * Altera o estilo do Header quando o scroll da página é ativado (transparente -> sólido)
-   */
   setupScrollEffect() {
     const header = this.querySelector('#landing-header');
     if (!header) return;
@@ -65,85 +56,71 @@ class MainHeader extends HTMLElement {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    // Executa uma vez no início para caso a página já carregue com scroll
     handleScroll();
   }
 
-  /**
-   * Gerencia a abertura e fechamento do menu hamburger em dispositivos móveis
-   */
   setupMobileMenu() {
     const toggle = this.querySelector('#menu-toggle');
     const nav = this.querySelector('#header-nav');
     const backdrop = this.querySelector('#menu-backdrop');
-    const hamburgerIcon = this.querySelector('.hamburger-icon');
-    const closeIcon = this.querySelector('.close-icon');
     
     if (!toggle || !nav) return;
 
-    const toggleMenu = (forceClose = null) => {
-      const isOpen = forceClose !== null ? !forceClose : nav.classList.contains('open');
-      const expanded = !isOpen;
-      
-      toggle.setAttribute('aria-expanded', expanded);
-      nav.classList.toggle('open', expanded);
-      toggle.classList.toggle('active', expanded);
-      
-      if (backdrop) {
-        backdrop.classList.toggle('active', expanded);
-      }
-      
-      if (hamburgerIcon && closeIcon) {
-        hamburgerIcon.style.display = expanded ? 'none' : 'block';
-        closeIcon.style.display = expanded ? 'block' : 'none';
-      }
-      
-      document.body.style.overflow = expanded ? 'hidden' : '';
+    const closeMenu = () => {
+      nav.classList.remove('open');
+      backdrop.classList.remove('active');
+      toggle.classList.remove('active');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
     };
 
-    toggle.addEventListener('click', () => toggleMenu());
+    const openMenu = () => {
+      nav.classList.add('open');
+      backdrop.classList.add('active');
+      toggle.classList.add('active');
+      toggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (nav.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
 
     if (backdrop) {
-      backdrop.addEventListener('click', () => toggleMenu(true));
+      backdrop.addEventListener('click', closeMenu);
     }
 
-    // Fecha o menu móvel ao selecionar qualquer link de âncora
-    const links = this.querySelectorAll('.menu-link');
+    // Fecha menu ao clicar em link
+    const links = nav.querySelectorAll('.menu-link');
     links.forEach(link => {
-      link.addEventListener('click', () => {
-        toggleMenu(true);
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        closeMenu();
+        
+        setTimeout(() => {
+          const target = document.querySelector(targetId);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
       });
     });
   }
 
-  /**
-   * Configura o comportamento de Scroll Suave nas âncoras da página e marca links ativos
-   */
   setupSmoothScroll() {
+    // Observador para marcar link ativo durante scroll
     const links = this.querySelectorAll('.menu-link');
-    
-    links.forEach(link => {
-      link.addEventListener('click', (e) => {
-        const targetId = link.getAttribute('href');
-        if (targetId.startsWith('#')) {
-          e.preventDefault();
-          const targetElement = document.querySelector(targetId);
-          if (targetElement) {
-            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            
-            // Atualiza o estado ativo
-            links.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
-          }
-        }
-      });
-    });
-
-    // Observador de interseção para ativar dinamicamente os links durante o scroll
     const sections = document.querySelectorAll('section[id]');
+    
     const observerOptions = {
       root: null,
-      rootMargin: '-50% 0px -50% 0px', // Aciona quando a seção está no meio da tela
+      rootMargin: '-20% 0px -80% 0px',
       threshold: 0
     };
 

@@ -69,7 +69,9 @@ body {
   display: block;
 }
 
-/* Navegação e Menu */
+/* ============================================
+   HEADER - Menu responsivo
+   ============================================ */
 .header-nav {
   display: flex;
   align-items: center;
@@ -102,7 +104,6 @@ body {
   outline-offset: 4px;
 }
 
-/* Botões de Ação */
 .header-actions {
   display: flex;
   gap: var(--space-md);
@@ -157,61 +158,79 @@ body {
   background: var(--teal-light);
 }
 
-/* Hamburger Menu Mobile */
+/* ============================================
+   MENU HAMBURGER
+   ============================================ */
 .menu-toggle {
   display: none;
   background: transparent;
   border: none;
   cursor: pointer;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   position: relative;
-  z-index: 1001;
+  z-index: 1002;
+  align-items: center;
+  justify-content: center;
 }
 
-.hamburger {
+.hamburger-lines {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  position: relative;
+}
+
+.hamburger-lines .line {
   display: block;
   width: 24px;
   height: 2px;
   background: var(--blue-deep);
+  border-radius: 2px;
   position: absolute;
+  transition: all 0.3s ease;
+}
+
+.line-1 { top: 3px; }
+.line-2 { top: 50%; transform: translateY(-50%); }
+.line-3 { bottom: 3px; }
+
+.menu-toggle.active .line-1 {
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: var(--transition-fast);
+  transform: translateY(-50%) rotate(45deg);
+  background: var(--text-white);
 }
 
-.hamburger::before,
-.hamburger::after {
-  content: '';
-  display: block;
-  width: 24px;
-  height: 2px;
-  background: var(--blue-deep);
-  position: absolute;
-  transition: var(--transition-fast);
+.menu-toggle.active .line-2 {
+  opacity: 0;
 }
 
-.hamburger::before {
-  top: -8px;
+.menu-toggle.active .line-3 {
+  bottom: 50%;
+  transform: translateY(50%) rotate(-45deg);
+  background: var(--text-white);
 }
 
-.hamburger::after {
-  top: 8px;
-}
-
-.menu-toggle.active .hamburger {
-  background: transparent;
-}
-
-.menu-toggle.active .hamburger::before {
+.menu-backdrop {
+  position: fixed;
   top: 0;
-  transform: rotate(45deg);
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(11, 27, 94, 0.5);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1000;
+  transition: all 0.3s ease;
 }
 
-.menu-toggle.active .hamburger::after {
-  top: 0;
-  transform: rotate(-45deg);
+.menu-backdrop.active {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* === SEÇÕES DA LANDING PAGE === */
@@ -1053,352 +1072,287 @@ body {
 
 /* 2. Breakpoint Mobile: max-width 767px */
 @media (max-width: 767px) {
-  /* Menu Hambúrguer Fixo no Topo */
-  .mobile-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: var(--blue-deep);
-    padding: var(--space-md);
-    z-index: 1000;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: var(--shadow-md);
-    height: 70px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  
+  /* Header Mobile */
+  .landing-header {
+    height: 60px;
+    background: var(--blue-deep) !important;
+    backdrop-filter: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   }
 
-  /* Logo Reduzida */
-  .mobile-logo {
+  .header-logo-img {
     height: 32px;
-    width: auto;
   }
 
-  /* Menu Overlay */
-  .mobile-menu-overlay {
+  /* Menu Toggle Hamburger - visível no mobile */
+  .menu-toggle {
+    display: flex !important;
+  }
+
+  .hamburger-lines .line {
+    background: var(--text-white);
+  }
+
+  /* Menu Nav - desliza da esquerda */
+  .header-nav {
     position: fixed;
     top: 0;
     left: -100%;
-    width: 80%;
+    width: 85%;
     max-width: 300px;
     height: 100vh;
     background: var(--blue-deep);
-    transition: left 0.3s ease;
-    z-index: 1001;
-    padding: var(--space-xl);
-    display: flex;
     flex-direction: column;
-    align-items: stretch;
-    box-shadow: var(--shadow-2xl);
+    padding: 80px var(--space-xl) var(--space-xl);
+    transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1001;
+    box-shadow: 10px 0 30px rgba(0,0,0,0.3);
+    gap: 0;
   }
 
-  .mobile-menu-overlay.active,
-  .mobile-menu-overlay.open {
+  .header-nav.open {
     left: 0;
-  }
-
-  /* Links do Menu Mobile */
-  .mobile-menu-link {
-    display: flex;
-    align-items: center;
-    gap: var(--space-md);
-    padding: var(--space-lg) 0;
-    color: var(--text-white);
-    font-size: 1.1rem;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    transition: all 0.2s;
-    text-decoration: none;
-    width: 100%;
-  }
-
-  .mobile-menu-link:hover {
-    color: var(--teal);
-    padding-left: var(--space-md);
-  }
-
-  .menu-toggle {
-    display: block !important;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    width: 44px; /* Touch target adequado */
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1002;
-    color: var(--text-white);
   }
 
   .header-menu {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .menu-link {
+    display: flex;
+    align-items: center;
     gap: var(--space-md);
-    margin-top: var(--space-xl);
+    padding: var(--space-lg) 0;
+    color: rgba(255,255,255,0.85);
+    font-size: 1rem;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.2s;
+  }
+
+  .menu-link:hover,
+  .menu-link.active {
+    color: var(--teal-light);
+    padding-left: var(--space-sm);
   }
 
   .header-actions {
     flex-direction: column;
     gap: var(--space-md);
-    margin-top: var(--space-lg);
-  }
-
-  /* Hero Section Mobile */
-  .hero-section-mobile {
-    padding: calc(var(--space-2xl) + 60px) var(--space-lg) var(--space-2xl);
-    min-height: auto;
-  }
-
-  .hero-title-mobile {
-    font-size: 2rem;
-    line-height: 1.2;
-    margin-bottom: var(--space-lg);
-  }
-
-  .hero-subtitle-mobile {
-    font-size: 1rem;
-    margin-bottom: var(--space-xl);
-    opacity: 0.9;
-  }
-
-  /* Botões Empilhados */
-  .hero-ctas-mobile {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-
-  .btn-mobile {
-    width: 100%;
-    padding: var(--space-lg);
-    font-size: 1rem;
-    text-align: center;
-    border-radius: var(--radius-md);
-    min-height: 56px; /* Touch target adequado */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Mockup Simplificado */
-  .hero-visual-mobile {
     margin-top: var(--space-xl);
-    position: relative;
-    display: flex;
-    justify-content: center;
+    padding-top: var(--space-xl);
+    border-top: 1px solid rgba(255,255,255,0.1);
   }
 
-  .hero-card-mockup-mobile {
-    background: rgba(255,255,255,0.05);
-    border-radius: var(--radius-lg);
-    padding: var(--space-lg);
-    border: 1px solid rgba(255,255,255,0.1);
+  .header-actions .btn {
     width: 100%;
-    max-width: 450px;
-  }
-
-  /* Ícone Flutuante Menor */
-  .hero-brand-icon-floating-mobile {
-    position: absolute;
-    top: -20px;
-    right: -10px;
-    width: 80px;
-    height: 80px;
-    animation: float-mobile 3s ease-in-out infinite;
-    background: var(--bg-card);
-    border-radius: var(--radius-md);
-    padding: var(--space-xs);
-    display: flex;
-    align-items: center;
     justify-content: center;
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: var(--shadow-lg);
-  }
-
-  /* Cards de Cursos Mobile */
-  .cursos-grid-mobile {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-xl);
-  }
-
-  .course-card-mobile {
-    background: var(--bg-white);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: var(--shadow-md);
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-
-  .course-card-mobile:active {
-    transform: scale(0.98);
-  }
-
-  .course-thumbnail-mobile {
-    height: 200px;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-  }
-
-  .course-badge-level-mobile {
-    position: absolute;
-    top: var(--space-md);
-    left: var(--space-md);
-    background: var(--blue-deep);
-    color: var(--text-white);
-    padding: var(--space-xs) var(--space-md);
-    border-radius: var(--radius-sm);
-    font-size: 0.75rem;
-    font-weight: 600;
-  }
-
-  .course-info-mobile {
-    padding: var(--space-lg);
-  }
-
-  /* Botão Full Width no Mobile */
-  .btn-card-action-mobile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-sm);
-    width: 100%;
     padding: var(--space-md);
-    background: var(--blue-deep);
-    color: var(--text-white) !important;
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    transition: background 0.2s;
-    text-decoration: none;
-    border-top: none !important;
+    font-size: 1rem;
   }
 
-  .btn-card-action-mobile:hover {
+  .btn-outline {
+    color: var(--text-white);
+    border: 2px solid rgba(255,255,255,0.3);
+    background: transparent;
+  }
+
+  .btn-filled {
     background: var(--teal);
+    color: var(--blue-deep);
+    border: none;
   }
 
-  /* Seção Trilhas Mobile */
-  .beneficio-row-mobile {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
-    margin-bottom: var(--space-2xl);
-  }
-
-  .beneficio-visual-mobile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: var(--space-xl);
-    background: var(--bg-light);
-    border-radius: var(--radius-lg);
-    height: 200px;
-  }
-
-  .beneficio-content-mobile {
-    text-align: center;
-  }
-
-  .beneficio-tag-mobile {
-    display: inline-block;
-    background: var(--teal);
-    color: var(--text-white) !important;
-    padding: var(--space-xs) var(--space-md);
-    border-radius: var(--radius-full);
-    font-size: 0.75rem;
-    font-weight: 600;
-    margin-bottom: var(--space-md);
-  }
-
-  .beneficio-title-mobile {
-    font-size: 1.5rem;
-    margin-bottom: var(--space-md);
-  }
-
-  /* Lista de Benefícios Mobile */
-  .beneficio-list-mobile {
-    list-style: none;
-    padding: 0;
-    margin-top: var(--space-lg);
-    text-align: left;
-  }
-
-  .beneficio-item-mobile {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-md);
-    margin-bottom: var(--space-md);
-    font-size: 0.95rem;
-  }
-
-  /* Fade In Up */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .animate-on-scroll-mobile {
-    opacity: 0;
-    animation: fadeInUp 0.6s ease forwards;
-  }
-
-  /* Stagger Effect */
-  .animate-delay-1 { animation-delay: 0.1s; }
-  .animate-delay-2 { animation-delay: 0.2s; }
-  .animate-delay-3 { animation-delay: 0.3s; }
-
-  /* Ripple Effect para Botões */
-  .ripple-mobile {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .ripple-mobile::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255,255,255,0.3);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.3s, height 0.3s;
-  }
-
-  .ripple-mobile:active::after {
-    width: 200px;
-    height: 200px;
-  }
-
-  /* Configuração para o menu backdrop fixo */
+  /* Menu Backdrop */
   .menu-backdrop {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(11, 27, 94, 0.4);
+    background: rgba(11, 27, 94, 0.6);
     backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
     opacity: 0;
-    pointer-events: none;
+    visibility: hidden;
     z-index: 1000;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
   }
 
   .menu-backdrop.active {
     opacity: 1;
-    pointer-events: all;
+    visibility: visible;
+  }
+
+  /* Hero Mobile */
+  .hero-section {
+    padding: 80px var(--space-md) var(--space-2xl);
+    min-height: 100vh;
+  }
+
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    text-align: center;
+  }
+
+  .hero-tag {
+    font-size: 0.75rem;
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-title {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    line-height: 1.15;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: var(--space-xl);
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .hero-ctas .btn {
+    width: 100%;
+    padding: var(--space-md) var(--space-lg);
+    font-size: 0.95rem;
+  }
+
+  .hero-card-mockup {
+    display: none;
+  }
+
+  /* Section Mobile */
+  .section {
+    padding: var(--space-2xl) var(--space-md);
+  }
+
+  .section-header-title {
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+  }
+
+  /* Sobre Grid */
+  .sobre-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Cursos Grid */
+  .cursos-grid-destaque {
+    grid-template-columns: 1fr;
+  }
+
+  .course-thumbnail {
+    height: 160px;
+  }
+
+  /* Benefícios Row */
+  .beneficio-row,
+  .beneficio-row.reverse {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .beneficio-visual {
+    height: 200px;
+  }
+
+  .beneficio-content {
+    text-align: center;
+    padding: var(--space-md) 0;
+  }
+
+  /* Stats */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  /* Diferenciais */
+  .diferenciais-grid {
+    grid-template-columns: 1fr;
+  }
+
+/* Footer */
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 3. Breakpoint Tablet: min-width 768px and max-width 1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .menu-toggle {
+    display: none !important;
+  }
+
+  .header-nav {
+    display: flex !important;
+  }
+
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    text-align: center;
+  }
+
+  .hero-ctas {
+    justify-content: center;
+  }
+
+  .hero-visual {
+    margin-top: var(--space-xl);
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  .cursos-grid-destaque {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .beneficio-row,
+  .beneficio-row.reverse {
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--space-xl);
+  }
+
+  .beneficio-visual {
+    height: 240px;
+  }
+
+.footer-container {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+/* 4. Breakpoint Desktop: min-width 1024px */
+@media (min-width: 1024px) {
+  .menu-toggle {
+    display: none !important;
+  }
+
+  .header-nav {
+    display: flex !important;
+  }
+
+  .hero-section {
+    padding: calc(var(--space-3xl) + 80px) var(--space-2xl) var(--space-3xl);
+  }
+
+  .hero-container {
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--space-3xl);
   }
 }
 
