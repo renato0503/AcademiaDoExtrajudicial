@@ -1285,6 +1285,7 @@ body {
   }
 
 /* HERO MOBILE - Layout otimizado */
+@media (max-width: 767px) {
   .hero-section {
     min-height: 100vh;
     padding: 60px var(--space-md) var(--space-2xl);
